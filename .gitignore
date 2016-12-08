@@ -1,3 +1,5 @@
 obj/*
 alltest.out
 libvisa.so
+data/*
+exSincFilter.out

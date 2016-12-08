@@ -2,8 +2,9 @@ IDIR=include
 ODIR=obj
 SDIR=src
 TESTDIR=unittest
+EXDIR=Examples
 
-SOURCES := visualizer.cpp visualizer1D.cpp sincFilter.cpp fifoBuffer.cpp
+SOURCES := visualizer.cpp visualizer1D.cpp sincFilter.cpp fifoBuffer.cpp colormaps.cpp
 TESTS := maintest.cpp testFifo.cpp
 TEST_OBJECTS := ${TESTS:%.cpp=%.o}
 TEST_OBJECTS := $(addprefix ${ODIR}/, ${TEST_OBJECTS})
@@ -17,14 +18,19 @@ GRAPHLIBS=-lsfml-graphics -lsfml-window -lsfml-system
 lib: ${OBJECTS}
 	g++  -std=c++11 $^ -fPIC -shared -o libvisa.so
 
+alltest.out: ${OBJECTS} ${TEST_OBJECTS}
+	g++ $^ -o $@ ${GRAPHLIBS} -lgtest -lgtest_main -lpthread
+
+exSincFilter.out: ${ODIR}/exSincFilter.o ${OBJECTS}
+	g++ $^ -o $@ ${GRAPHLIBS}
+
 ${ODIR}/%.o: ${SDIR}/%.cpp
 	g++ -std=c++11 -fPIC -MMD -c $< -o $@ -I ${IDIR}
 
 ${ODIR}/%.o: ${TESTDIR}/%.cpp
+	#g++ -std=c++11 -fPIC -MMD -c $< -o $@ -I ${IDIR}
+
+${ODIR}/%.o: ${EXDIR}/%.cpp
 	g++ -std=c++11 -fPIC -MMD -c $< -o $@ -I ${IDIR}
-
-alltest.out: ${OBJECTS} ${TEST_OBJECTS}
-	g++ -o $^ -o $@ ${GRAPHLIBS} -lgtest -lgtest_main -lpthread
-
 clean:
 	rm ${ODIR}/*.o

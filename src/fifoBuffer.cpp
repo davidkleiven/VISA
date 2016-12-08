@@ -21,7 +21,6 @@ double FIFOBuffer::get( unsigned int n ) const
 
 void FIFOBuffer::push_back( double element )
 {
-  values[head] = element;
-  head++;
+  values[head++] = element;
   head = head%size;
 }

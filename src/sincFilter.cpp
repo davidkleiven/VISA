@@ -23,8 +23,8 @@ double SincFilter::newNyquistFrequency()
 void SincFilter::computeFilterCoefficients()
 {
   filterCoeff.clear();
-  unsigned int nmax = 2.0*sourceSize/targetSize+1;
-  for ( int n=-nmax;n<nmax;n++ )
+  int nmax = 2.0*sourceSize/targetSize+1;
+  for ( int n=-nmax;n<=nmax;n++ )
   {
     double x = PI*targetSize*n/sourceSize;
     filterCoeff.push_back( sinc(x) );

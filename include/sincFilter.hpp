@@ -1,6 +1,8 @@
 #ifndef SINCFILTER_H
 #define SINCFILTER_H
 #include <vector>
+#include <cassert>
+#include "fifoBuffer.hpp"
 
 class SincFilter
 {
@@ -29,4 +31,6 @@ private:
 
   static double sinc( double x );
 };
+
+#include "sincFilter.tpp"
 #endif
