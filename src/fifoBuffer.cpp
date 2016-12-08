@@ -15,8 +15,7 @@ FIFOBuffer::~FIFOBuffer()
 
 double FIFOBuffer::get( unsigned int n ) const
 {
-  int indx = static_cast<int>(n+head)-1;
-  if ( indx < 0 ) indx += size;
+  unsigned int indx = (n+head)%size;
   return values[indx];
 }
 
