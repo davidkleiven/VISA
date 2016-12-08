@@ -16,8 +16,9 @@ public:
   /** Computes the filter coefficient corresponding to lengthIn and lengthOut */
   void computeFilterCoefficients();
 
-  /** Runs the sinc filter through the array */
-  void filterArray( double array[] ) const;
+  /** Runs the sinc filter through the array. arrayType must implement operator[] */
+  template <class arrayType>
+  void filterArray( arrayType &array ) const;
 private:
   unsigned int sourceSize{0};
   unsigned int targetSize{0};
