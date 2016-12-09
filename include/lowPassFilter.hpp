@@ -3,11 +3,12 @@
 #include <vector>
 #include <cassert>
 #include "fifoBuffer.hpp"
+#include <iostream>
 
-class SincFilter
+class LowPassFilter
 {
 public:
-  SincFilter(){};
+  LowPassFilter(){};
 
   /** Set the length of the vector to be filtered */
   void setSourceSize( unsigned int lIn ){ sourceSize=lIn; };
@@ -16,7 +17,8 @@ public:
   void setTargetSize( unsigned int lOut ){ targetSize=lOut; };
 
   /** Computes the filter coefficient corresponding to lengthIn and lengthOut */
-  void computeFilterCoefficients();
+  template <class kernelType>
+  void computeFilterCoefficients( const kernelType &kernel );
 
   /** Runs the sinc filter through the array. arrayType must implement operator[] */
   template <class arrayType>
@@ -25,12 +27,16 @@ private:
   unsigned int sourceSize{0};
   unsigned int targetSize{0};
   std::vector<double> filterCoeff;
+  double sumFilter{0.0};
 
   /** Nyquist frequency of the output vector */
   double newNyquistFrequency();
 
+  /** Compute the sum of the filter coefficients */
+  double sumFilterCoeff() const;
+
   static double sinc( double x );
 };
 
-#include "sincFilter.tpp"
+#include "lowPassFilter.tpp"
 #endif
