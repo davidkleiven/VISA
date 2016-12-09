@@ -1,4 +1,5 @@
-#include "sincFilter.hpp"
+#include "lowPassFilter.hpp"
+#include "gaussianKernel.hpp"
 #include <vector>
 #include <iostream>
 #include <fstream>
@@ -25,10 +26,11 @@ int main()
   }
   vector<double> unfiltered(linearRamp);
 
-  SincFilter filter;
+  GaussianKernel kernel;
+  LowPassFilter filter;
   filter.setSourceSize( linearRamp.size() );
-  filter.setTargetSize( linearRamp.size()/10 );
-  filter.computeFilterCoefficients();
+  filter.setTargetSize( linearRamp.size()/2 );
+  filter.computeFilterCoefficients( kernel );
   filter.filterArray( linearRamp );
 
   // Write results to file

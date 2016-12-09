@@ -4,7 +4,7 @@ SDIR=src
 TESTDIR=unittest
 EXDIR=Examples
 
-SOURCES := visualizer.cpp visualizer1D.cpp sincFilter.cpp fifoBuffer.cpp colormaps.cpp
+SOURCES := visualizer.cpp visualizer1D.cpp lowPassFilter.cpp fifoBuffer.cpp colormaps.cpp gaussianKernel.cpp
 TESTS := maintest.cpp testFifo.cpp
 TEST_OBJECTS := ${TESTS:%.cpp=%.o}
 TEST_OBJECTS := $(addprefix ${ODIR}/, ${TEST_OBJECTS})
@@ -28,7 +28,7 @@ ${ODIR}/%.o: ${SDIR}/%.cpp
 	g++ -std=c++11 -fPIC -MMD -c $< -o $@ -I ${IDIR}
 
 ${ODIR}/%.o: ${TESTDIR}/%.cpp
-	#g++ -std=c++11 -fPIC -MMD -c $< -o $@ -I ${IDIR}
+	g++ -std=c++11 -fPIC -MMD -c $< -o $@ -I ${IDIR}
 
 ${ODIR}/%.o: ${EXDIR}/%.cpp
 	g++ -std=c++11 -fPIC -MMD -c $< -o $@ -I ${IDIR}
