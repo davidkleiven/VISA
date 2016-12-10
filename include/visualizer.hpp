@@ -66,8 +66,10 @@ protected:
   GaussianKernel filterKernel;
   std::string name;
 
-  double width{640};
-  double height{480};
+  unsigned int width{640};
+  unsigned int height{480};
+  static const unsigned int defaultWidth{640};
+  static const unsigned int defaultHeight{480};
   double colorMax{1.0};
   double colorMin{0.0};
   unsigned int vArrayNrow{0};
@@ -77,7 +79,17 @@ protected:
 
   /** Set color corresponding to value */
   void setColor( double value, sf::Color &color ) const;
+
+  /** Run the matrix through the low pass filter */
   void filterMatrix( arma::mat &mat );
+
+  /** Insert the positions in the vertex array */
   void fillVertexArrayPositions();
+
+  /** Resize the window to match the matrix */
+  void resizeWindow( unsigned int newWidth, unsigned int newHeight );
+
+  /** Restores the default window height and width */
+  void restoreDefaultWindowSize();
 };
 #endif

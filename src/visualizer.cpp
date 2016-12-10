@@ -47,22 +47,22 @@ void Visualizer::fillVertexArray( arma::mat &values )
 {
   if ( vArray == NULL )
   {
-    if ( values.n_rows*values.n_cols > width*height )
-    {
-      vArrayNrow = height;
-      vArrayNcol = width;
-    }
-    else
-    {
-      return; // This case is not yet implemented
-      vArrayNrow = values.n_rows;
-      vArrayNcol = values.n_cols;
-    }
     fillVertexArrayPositions();
   }
-  filterMatrix(values);
-  double rowStep = static_cast<double>(values.n_rows)/static_cast<double>(height);
-  double colStep = static_cast<double>(values.n_cols)/static_cast<double>(width);
+
+  double rowStep, colStep;
+  if ( values.n_rows*values.n_cols > width*height )
+  {
+    filterMatrix(values);
+    rowStep = static_cast<double>(values.n_rows)/static_cast<double>(height);
+    colStep = static_cast<double>(values.n_cols)/static_cast<double>(width);
+  }
+  else
+  {
+    resizeWindow(values.n_cols, values.n_rows);
+    rowStep = 1;
+    colStep = 1;
+  }
 
   for ( unsigned int row=0;row<height;row++ )
   {
@@ -167,4 +167,18 @@ void Visualizer::fillVertexArrayPositions()
       (*vArray)[row*width+col].position = sf::Vector2f(col,row);
     }
   }
+}
+
+void Visualizer::resizeWindow( unsigned int newWidth, unsigned int newHeight )
+{
+  width = newWidth;
+  height = newHeight;
+  window->setSize(sf::Vector2u(width,height));
+  if ( vArray != NULL ) delete vArray;
+  fillVertexArrayPositions();
+}
+
+void Visualizer::restoreDefaultWindowSize()
+{
+  resizeWindow(defaultWidth,defaultHeight);
 }
