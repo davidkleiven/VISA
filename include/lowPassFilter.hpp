@@ -5,6 +5,8 @@
 #include "fifoBuffer.hpp"
 #include <iostream>
 
+namespace visa
+{
 class LowPassFilter
 {
 public:
@@ -37,6 +39,7 @@ private:
 
   static double sinc( double x );
 };
+}; // namespace
 
 #include "lowPassFilter.tpp"
 #endif

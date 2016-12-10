@@ -1,7 +1,7 @@
 #include "fifoBuffer.hpp"
 
 using namespace std;
-FIFOBuffer::FIFOBuffer( unsigned int size ):size(size)
+visa::FIFOBuffer::FIFOBuffer( unsigned int size ):size(size)
 {
   values = new double[size];
   for ( unsigned int i=0;i<size;i++ )
@@ -9,24 +9,24 @@ FIFOBuffer::FIFOBuffer( unsigned int size ):size(size)
     values[i] = 0.0;
   }
 }
-FIFOBuffer::~FIFOBuffer()
+visa::FIFOBuffer::~FIFOBuffer()
 {
   delete [] values;
 }
 
-double FIFOBuffer::get( unsigned int n ) const
+double visa::FIFOBuffer::get( unsigned int n ) const
 {
   unsigned int indx = (n+head)%size;
   return values[indx];
 }
 
-void FIFOBuffer::push_back( double element )
+void visa::FIFOBuffer::push_back( double element )
 {
   values[head++] = element;
   head = head%size;
 }
 
-ostream& operator <<( ostream& out, const FIFOBuffer &buffer )
+ostream& visa::operator <<( ostream& out, const visa::FIFOBuffer &buffer )
 {
   for ( unsigned int i=0;i<buffer.size;i++ )
   {

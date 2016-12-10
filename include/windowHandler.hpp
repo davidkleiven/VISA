@@ -2,6 +2,8 @@
 #define WINDOW_HANDLER_H
 #include "visualizer.hpp"
 
+namespace visa
+{
 /** Class that handles the windows */
 class WindowHandler
 {
@@ -29,5 +31,6 @@ private:
 
   /** If the active window is closed, this sets a new active window */
   void resetActive();
+};
 };
 #endif

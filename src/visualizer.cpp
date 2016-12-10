@@ -6,9 +6,9 @@
 
 using namespace std;
 
-Visualizer::Visualizer(){};
+visa::Visualizer::Visualizer(){};
 
-Visualizer::~Visualizer()
+visa::Visualizer::~Visualizer()
 {
   if ( view != NULL ) delete view;
   if ( window != NULL ) delete window;
@@ -17,7 +17,7 @@ Visualizer::~Visualizer()
   if ( tx != NULL ) delete tx;
 }
 
-void Visualizer::init( const char *windowName )
+void visa::Visualizer::init( const char *windowName )
 {
   name = windowName;
   window = new sf::RenderWindow(sf::VideoMode(width, height), windowName);
@@ -39,12 +39,12 @@ void Visualizer::init( const char *windowName )
   //window->setView(*view);
 }
 
-void Visualizer::init()
+void visa::Visualizer::init()
 {
   init("Default Window");
 }
 
-void Visualizer::fillVertexArray( arma::mat &values )
+void visa::Visualizer::fillVertexArray( arma::mat &values )
 {
   if ( vArray == NULL )
   {
@@ -126,7 +126,7 @@ void Visualizer::fillVertexArray( arma::mat &values )
  //window->draw(*vArray);
 }
 
-bool Visualizer::isOpen() const
+bool visa::Visualizer::isOpen() const
 {
   if ( window != NULL )
   {
@@ -135,7 +135,7 @@ bool Visualizer::isOpen() const
   return false;
 }
 
-bool Visualizer::pollEvent( sf::Event &event ) const
+bool visa::Visualizer::pollEvent( sf::Event &event ) const
 {
   if ( window != NULL )
   {
@@ -144,7 +144,7 @@ bool Visualizer::pollEvent( sf::Event &event ) const
   return false;
 }
 
-double Visualizer::average( const arma::mat &mat )
+double visa::Visualizer::average( const arma::mat &mat )
 {
   double avg = 0.0;
   for ( unsigned int i=0;i<mat.n_rows;i++ )
@@ -157,7 +157,7 @@ double Visualizer::average( const arma::mat &mat )
   return avg/(mat.n_rows*mat.n_cols);
 }
 
-void Visualizer::setColor( double value, sf::Color &color ) const
+void visa::Visualizer::setColor( double value, sf::Color &color ) const
 {
   int indx = 255*(value-colorMin)/(colorMax-colorMin);
   indx  = indx > 255 ? 255:indx;
@@ -178,13 +178,13 @@ void Visualizer::setColor( double value, sf::Color &color ) const
   }
 }
 
-void Visualizer::filterMatrix( arma::mat &mat )
+void visa::Visualizer::filterMatrix( arma::mat &mat )
 {
   filterHorizontal(mat);
   filterVertical(mat);
 }
 
-void Visualizer::filterHorizontal( arma::mat &mat )
+void visa::Visualizer::filterHorizontal( arma::mat &mat )
 {
   filter.setSourceSize( mat.n_cols );
   filter.setTargetSize( width );
@@ -197,7 +197,7 @@ void Visualizer::filterHorizontal( arma::mat &mat )
   }
 }
 
-void Visualizer::filterVertical( arma::mat &mat )
+void visa::Visualizer::filterVertical( arma::mat &mat )
 {
   filter.setSourceSize( mat.n_rows );
   filter.setTargetSize( height );
@@ -210,7 +210,7 @@ void Visualizer::filterVertical( arma::mat &mat )
   }
 }
 
-void Visualizer::fillVertexArrayPositions()
+void visa::Visualizer::fillVertexArrayPositions()
 {
   if ( vArray == NULL )
   {
@@ -226,7 +226,7 @@ void Visualizer::fillVertexArrayPositions()
   }
 }
 
-void Visualizer::resizeWindow( unsigned int newWidth, unsigned int newHeight )
+void visa::Visualizer::resizeWindow( unsigned int newWidth, unsigned int newHeight )
 {
   width = newWidth;
   height = newHeight;
@@ -241,22 +241,22 @@ void Visualizer::resizeWindow( unsigned int newWidth, unsigned int newHeight )
   fillVertexArrayPositions();
 }
 
-void Visualizer::restoreDefaultWindowSize()
+void visa::Visualizer::restoreDefaultWindowSize()
 {
   resizeWindow(defaultWidth,defaultHeight);
 }
 
-void Visualizer::resizeWidth( unsigned int newWidth )
+void visa::Visualizer::resizeWidth( unsigned int newWidth )
 {
   resizeWindow( newWidth, height );
 }
 
-void Visualizer::resizeHeight( unsigned int newHeight )
+void visa::Visualizer::resizeHeight( unsigned int newHeight )
 {
   resizeWindow( width, newHeight );
 }
 
-void Visualizer::draw()
+void visa::Visualizer::draw()
 {
   if ( vArray != NULL )
   {

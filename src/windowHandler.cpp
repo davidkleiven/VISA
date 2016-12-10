@@ -4,7 +4,7 @@
 #include <SFML/Window.hpp>
 
 using namespace std;
-WindowHandler::~WindowHandler()
+visa::WindowHandler::~WindowHandler()
 {
   for ( unsigned int i=0;i<plots.size();i++ )
   {
@@ -13,9 +13,9 @@ WindowHandler::~WindowHandler()
   }
 }
 
-void WindowHandler::addPlot( const char* name )
+void visa::WindowHandler::addPlot( const char* name )
 {
-  plots.push_back( new Visualizer() );
+  plots.push_back( new visa::Visualizer() );
   plots.back()->init(name);
   if ( active == NULL )
   {
@@ -23,7 +23,7 @@ void WindowHandler::addPlot( const char* name )
   }
 }
 
-Visualizer& WindowHandler::get( const char* name )
+visa::Visualizer& visa::WindowHandler::get( const char* name )
 {
   string searchName(name);
   for ( unsigned int i=0;i<plots.size();i++ )
@@ -40,7 +40,7 @@ Visualizer& WindowHandler::get( const char* name )
   throw ( runtime_error(msg) );
 }
 
-Visualizer& WindowHandler::getActive()
+visa::Visualizer& visa::WindowHandler::getActive()
 {
   if ( active == NULL )
   {
@@ -49,12 +49,12 @@ Visualizer& WindowHandler::getActive()
   return *active;
 }
 
-void WindowHandler::setActive( const char* name )
+void visa::WindowHandler::setActive( const char* name )
 {
   active = &get(name);
 }
 
-void WindowHandler::show()
+void visa::WindowHandler::show()
 {
   if ( active == NULL ) return;
 
@@ -78,7 +78,7 @@ void WindowHandler::show()
   }
 }
 
-void WindowHandler::resetActive()
+void visa::WindowHandler::resetActive()
 {
   for ( unsigned int i=0;i<plots.size();i++ )
   {

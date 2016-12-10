@@ -3,13 +3,13 @@
 #include <iostream>
 
 using namespace std;
-void Visualizer1D::setLimits( double minVal, double maxVal )
+void visa::Visualizer1D::setLimits( double minVal, double maxVal )
 {
   min = minVal;
   max = maxVal;
 }
 
-unsigned int Visualizer1D::getY( double val ) const
+unsigned int visa::Visualizer1D::getY( double val ) const
 {
   int indx = ( (val-min)/(max-min) )*height;
   indx = indx > height ? height-1:indx;
@@ -17,7 +17,7 @@ unsigned int Visualizer1D::getY( double val ) const
   return height-indx;
 }
 
-void Visualizer1D::fillVertexArray( const arma::vec &vec )
+void visa::Visualizer1D::fillVertexArray( const arma::vec &vec )
 {
   if ( vArray == NULL )
   {

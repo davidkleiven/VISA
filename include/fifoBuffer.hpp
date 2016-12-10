@@ -2,6 +2,7 @@
 #define FIFO_BUFFER_H
 #include <iostream>
 
+namespace visa{
 class FIFOBuffer
 {
 public:
@@ -15,4 +16,6 @@ private:
   unsigned int size{0};
   double *values;
 };
+std::ostream& operator <<(std::ostream& out, const FIFOBuffer &buffer );
+}; // namespace
 #endif

@@ -1,9 +1,9 @@
 #include "gaussianKernel.hpp"
 #include <cmath>
 
-GaussianKernel::GaussianKernel(){}
+visa::GaussianKernel::GaussianKernel(){}
 
-double GaussianKernel::operator()( double x ) const
+double visa::GaussianKernel::operator()( double x ) const
 {
   return exp(-x*x);
 }

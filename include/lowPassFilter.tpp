@@ -1,8 +1,8 @@
 template <class arrayType>
-void LowPassFilter::filterArray( arrayType &array ) const
+void visa::LowPassFilter::filterArray( arrayType &array ) const
 {
   assert ( filterCoeff.size() > 0 );
-  FIFOBuffer buffer( filterCoeff.size() );
+  visa::FIFOBuffer buffer( filterCoeff.size() );
 
 
   // Initialize buffer
@@ -42,7 +42,7 @@ void LowPassFilter::filterArray( arrayType &array ) const
 }
 
 template <class kernelType>
-void LowPassFilter::computeFilterCoefficients( const kernelType &kernel )
+void visa::LowPassFilter::computeFilterCoefficients( const kernelType &kernel )
 {
   filterCoeff.clear();
   int nmax = 2.0*sourceSize/targetSize+1;

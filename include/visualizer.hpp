@@ -8,6 +8,8 @@
 #include "lowPassFilter.hpp"
 #include "gaussianKernel.hpp"
 
+namespace visa
+{
 /** Matrix visualizer using the SFML libray */
 class Visualizer
 {
@@ -65,8 +67,8 @@ protected:
   sf::View *view{NULL};
   sf::VertexArray *vArray{NULL};
   sf::RenderTexture *tx{NULL};
-  LowPassFilter filter;
-  GaussianKernel filterKernel;
+  visa::LowPassFilter filter;
+  visa::GaussianKernel filterKernel;
   std::string name;
 
   unsigned int width{640};
@@ -108,4 +110,5 @@ protected:
   /** Filter vertically */
   void filterVertical( arma::mat &mat );
 };
+}; // namespace
 #endif

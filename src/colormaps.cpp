@@ -1,6 +1,6 @@
 #include "colormaps.hpp"
 
-const double Colormaps::viridis[256][3] = {
+const double visa::Colormaps::viridis[256][3] = {
                  {0.267004, 0.004874, 0.329415},
                  {0.268510, 0.009605, 0.335427},
                  {0.269944, 0.014625, 0.341379},

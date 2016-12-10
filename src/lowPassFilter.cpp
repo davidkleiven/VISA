@@ -7,7 +7,7 @@
 using namespace std;
 const double PI = acos(-1.0);
 
-double LowPassFilter::sinc( double x )
+double visa::LowPassFilter::sinc( double x )
 {
   if ( abs(x) < 1E-5 )
   {
@@ -16,12 +16,12 @@ double LowPassFilter::sinc( double x )
   return sin(x)/x;
 }
 
-double LowPassFilter::newNyquistFrequency()
+double visa::LowPassFilter::newNyquistFrequency()
 {
   return PI*targetSize;
 }
 
-double LowPassFilter::sumFilterCoeff() const
+double visa::LowPassFilter::sumFilterCoeff() const
 {
   double sum = 0.0;
   for ( unsigned int i=0;i<filterCoeff.size();i++ )

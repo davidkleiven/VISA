@@ -2,6 +2,8 @@
 #define VISUALIZER1D_H
 #include "visualizer.hpp"
 
+namespace visa
+{
 /** Class for visualizing 1D curves using the SFML library */
 class Visualizer1D: public Visualizer
 {
@@ -20,4 +22,5 @@ private:
   double max{0.0};
   double min{0.0};
 };
+}; // namespace
 #endif
