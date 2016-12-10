@@ -5,11 +5,11 @@ SFML library.
 
 # Dependencies
 This library depends on:
-  * Simple and Fast Multimedia Library (SFML)[http://www.sfml-dev.org/]
-  * (Armadillo)[http://arma.sourceforge.net/]
+  * Simple and Fast Multimedia Library [SFML](http://www.sfml-dev.org/)
+  * [Armadillo](http://arma.sourceforge.net/)
 
 The unittests depends in addition on
-  * (Google Test)[https://github.com/google/googletest]
+  * [Google Test](https://github.com/google/googletest)
   * Pthreads
 
 To compile and link a application using this library add when linking
