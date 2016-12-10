@@ -18,13 +18,16 @@ Visualizer::~Visualizer()
 
 void Visualizer::init( const char *windowName )
 {
+  name = windowName;
   window = new sf::RenderWindow(sf::VideoMode(width, height), windowName);
   window->setKeyRepeatEnabled(false);
   window->clear( sf::Color::Black );
   window->setVerticalSyncEnabled(true);
+  fillVertexArrayPositions();
 
   tx = new sf::RenderTexture();
 
+  //if ( !tx->create(height, width) )
   if ( !tx->create(width, height) )
   {
     throw (runtime_error("Could not create texture!"));
@@ -40,7 +43,7 @@ void Visualizer::init()
   init("Default Window");
 }
 
-void Visualizer::fillVertexArray( const arma::mat &values )
+void Visualizer::fillVertexArray( arma::mat &values )
 {
   if ( vArray == NULL )
   {
@@ -55,35 +58,22 @@ void Visualizer::fillVertexArray( const arma::mat &values )
       vArrayNrow = values.n_rows;
       vArrayNcol = values.n_cols;
     }
-    vArray = new sf::VertexArray(sf::Points, vArrayNrow*vArrayNcol);
+    fillVertexArrayPositions();
   }
+  filterMatrix(values);
+  double rowStep = static_cast<double>(values.n_rows)/static_cast<double>(height);
+  double colStep = static_cast<double>(values.n_cols)/static_cast<double>(width);
 
-  double dr = static_cast<double>(width)/static_cast<double>(values.n_rows);
-  double dc = static_cast<double>(height)/static_cast<double>(values.n_cols);
-  unsigned int rowStep = values.n_rows/height;
-  unsigned int colStep = values.n_cols/width;
-  rowStep = rowStep == 0 ? 1:rowStep;
-  colStep = colStep == 0 ? 1:colStep;
-
-  for ( unsigned int row=0;row<vArrayNrow;row++ )
+  for ( unsigned int row=0;row<height;row++ )
   {
-    for ( unsigned int col=0;col<vArrayNcol;col++)
+    for ( unsigned int col=0;col<width;col++)
     {
-      (*vArray)[row*vArrayNrow+col].position = sf::Vector2f(row,col);
       sf::Color color;
-      unsigned int rStart = row*rowStep;
-      unsigned int colStart = col*colStep;
-      double avgValue = average( values.submat(rStart, colStart, rStart+rowStep, colStart+colStep) );
-      setColor( avgValue, color);
-      (*vArray)[row*vArrayNrow+col].color = color;
+      setColor( values(row*rowStep, col*colStep), color);
+      (*vArray)[row*width+col].color = color;
     }
   }
-  
-  tx->draw(*vArray);
-  tx->display();
-  sf::Sprite sprite( tx->getTexture());
-  // Draw onto screen
-  window->draw( sprite );
+  window->draw(*vArray);
 }
 
 bool Visualizer::isOpen() const
@@ -135,5 +125,46 @@ void Visualizer::setColor( double value, sf::Color &color ) const
       color.g = indx;
       color.b = indx;
       break;
+  }
+}
+
+void Visualizer::filterMatrix( arma::mat &mat )
+{
+  // Filter horizontal
+  filter.setSourceSize( mat.n_cols );
+  filter.setTargetSize( width );
+  filter.computeFilterCoefficients( filterKernel );
+
+  for ( unsigned int i=0;i<mat.n_rows;i++ )
+  {
+    arma::subview_row<double> row = mat.row(i);
+    filter.filterArray( row );
+  }
+
+  // Filter vertical
+  filter.setSourceSize( mat.n_rows );
+  filter.setTargetSize( height );
+  filter.computeFilterCoefficients( filterKernel );
+
+  for ( unsigned int i=0;i<mat.n_cols;i++ )
+  {
+    arma::subview_col<double> col = mat.col(i);
+    filter.filterArray( col );
+  }
+}
+
+void Visualizer::fillVertexArrayPositions()
+{
+  if ( vArray == NULL )
+  {
+    vArray = new sf::VertexArray(sf::Points, width*height);
+  }
+
+  for ( unsigned int row=0;row<height;row++ )
+  {
+    for ( unsigned int col=0;col<width;col++ )
+    {
+      (*vArray)[row*width+col].position = sf::Vector2f(col,row);
+    }
   }
 }

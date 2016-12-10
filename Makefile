@@ -4,7 +4,7 @@ SDIR=src
 TESTDIR=unittest
 EXDIR=Examples
 
-SOURCES := visualizer.cpp visualizer1D.cpp lowPassFilter.cpp fifoBuffer.cpp colormaps.cpp gaussianKernel.cpp
+SOURCES := visualizer.cpp visualizer1D.cpp lowPassFilter.cpp fifoBuffer.cpp colormaps.cpp gaussianKernel.cpp windowHandler.cpp
 TESTS := maintest.cpp testFifo.cpp
 TEST_OBJECTS := ${TESTS:%.cpp=%.o}
 TEST_OBJECTS := $(addprefix ${ODIR}/, ${TEST_OBJECTS})
@@ -23,6 +23,9 @@ alltest.out: ${OBJECTS} ${TEST_OBJECTS}
 
 exSincFilter.out: ${ODIR}/exSincFilter.o ${OBJECTS}
 	g++ $^ -o $@ ${GRAPHLIBS}
+
+exMexicanHat.out: ${ODIR}/exMexicanHat.o
+	g++ $^ -o $@ ${GRAPHLIBS} -Wl,-rpath,./ -L ./ -larmadillo -lvisa
 
 ${ODIR}/%.o: ${SDIR}/%.cpp
 	g++ -std=c++11 -fPIC -MMD -c $< -o $@ -I ${IDIR}

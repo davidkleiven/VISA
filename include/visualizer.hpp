@@ -3,7 +3,10 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <armadillo>
+#include <string>
 #include "colormaps.hpp"
+#include "lowPassFilter.hpp"
+#include "gaussianKernel.hpp"
 
 /** Matrix visualizer using the SFML libray */
 class Visualizer
@@ -21,7 +24,7 @@ public:
   void init();
 
   /** Set values to visualize */
-  void fillVertexArray( const arma::mat &values );
+  void fillVertexArray( arma::mat &values );
 
   /** Checks if the window is still open */
   bool isOpen() const;
@@ -41,6 +44,9 @@ public:
   /** Set upper limit of the colorscale */
   void setColorMax( double max ){ colorMax = max; };
 
+  /** Set the lower limit for the colorscale */
+  void setColorMin( double min ){ colorMin = min; };
+
   /** Set color map */
   void setCmap( Colormap_t cm ){ cmap = cm; };
 
@@ -49,11 +55,16 @@ public:
 
   /** Save current scene */
   sf::Image capture(){ return window->capture(); };
+
+  const std::string& getName() const { return name; };
 protected:
   sf::RenderWindow *window{NULL};
   sf::View *view{NULL};
   sf::VertexArray *vArray{NULL};
   sf::RenderTexture *tx{NULL};
+  LowPassFilter filter;
+  GaussianKernel filterKernel;
+  std::string name;
 
   double width{640};
   double height{480};
@@ -66,5 +77,7 @@ protected:
 
   /** Set color corresponding to value */
   void setColor( double value, sf::Color &color ) const;
+  void filterMatrix( arma::mat &mat );
+  void fillVertexArrayPositions();
 };
 #endif
