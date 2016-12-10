@@ -7,7 +7,7 @@ using namespace std;
 
 int main( int argc, char** argv )
 {
-  WindowHandler plots;
+  visa::WindowHandler plots;
   try
   {
     // Define plots

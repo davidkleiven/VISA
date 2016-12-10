@@ -9,7 +9,7 @@ using namespace std;
 void mexicanHat( double freq, arma::mat &matrix );
 int main( int argc, char** argv )
 {
-  WindowHandler plots;
+  visa::WindowHandler plots;
   try
   {
     plots.addPlot( "Mexican Hat" );

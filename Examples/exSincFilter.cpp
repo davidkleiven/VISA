@@ -26,8 +26,8 @@ int main()
   }
   vector<double> unfiltered(linearRamp);
 
-  GaussianKernel kernel;
-  LowPassFilter filter;
+  visa::GaussianKernel kernel;
+  visa::LowPassFilter filter;
   filter.setSourceSize( linearRamp.size() );
   filter.setTargetSize( linearRamp.size()/2 );
   filter.computeFilterCoefficients( kernel );
