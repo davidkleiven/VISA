@@ -2,6 +2,7 @@
 #include <iostream>
 #include <stdexcept>
 //#include <SFML/Color.hpp>
+//#define VIS_DEBUG
 
 using namespace std;
 
@@ -51,14 +52,58 @@ void Visualizer::fillVertexArray( arma::mat &values )
   }
 
   double rowStep, colStep;
-  if ( values.n_rows*values.n_cols > width*height )
+  if (( values.n_rows > height ) && (values.n_cols > width ))
   {
+    #ifdef VIS_DEBUG
+      clog << "Rows and columns to large\n";
+    #endif
+
     filterMatrix(values);
     rowStep = static_cast<double>(values.n_rows)/static_cast<double>(height);
     colStep = static_cast<double>(values.n_cols)/static_cast<double>(width);
   }
+  else if (( values.n_rows < height ) && ( values.n_cols < width ))
+  {
+    #ifdef VIS_DEBUG
+      clog << "Rows and columns to small\n";
+    #endif
+    resizeWindow(values.n_cols, values.n_rows);
+    rowStep = 1.0;
+    colStep = 1.0;
+  }
+  else if (( values.n_rows == height ) && (values.n_cols == width ))
+  {
+    #ifdef VIS_DEBUG
+      clog << "Rows and columns match\n";
+    #endif
+    rowStep = 1;
+    colStep = 1;
+  }
+  else if ( values.n_rows < height )
+  {
+    #ifdef VIS_DEBUG
+      clog << "Rows to small\n";
+    #endif
+    resizeWindow(width, values.n_rows);
+    rowStep = 1.0;
+    colStep = static_cast<double>(values.n_cols)/static_cast<double>(width);
+    filterHorizontal( values );
+  }
+  else if ( values.n_cols < width )
+  {
+    #ifdef VIS_DEBUG
+      clog << "Columns to small\n";
+    #endif
+    resizeWindow( values.n_cols, height );
+    rowStep = static_cast<double>(values.n_rows)/static_cast<double>(height);
+    colStep = 1.0;
+    filterVertical( values );
+  }
   else
   {
+    #ifdef VIS_DEBUG
+      clog << "Else clause\n";
+    #endif
     resizeWindow(values.n_cols, values.n_rows);
     rowStep = 1;
     colStep = 1;
@@ -73,7 +118,12 @@ void Visualizer::fillVertexArray( arma::mat &values )
       (*vArray)[row*width+col].color = color;
     }
   }
-  window->draw(*vArray);
+  tx->draw(*vArray);
+  tx->display();
+  sf::Sprite sprite( tx->getTexture());
+  // Draw onto screen
+  window->draw( sprite );
+ //window->draw(*vArray);
 }
 
 bool Visualizer::isOpen() const
@@ -130,7 +180,12 @@ void Visualizer::setColor( double value, sf::Color &color ) const
 
 void Visualizer::filterMatrix( arma::mat &mat )
 {
-  // Filter horizontal
+  filterHorizontal(mat);
+  filterVertical(mat);
+}
+
+void Visualizer::filterHorizontal( arma::mat &mat )
+{
   filter.setSourceSize( mat.n_cols );
   filter.setTargetSize( width );
   filter.computeFilterCoefficients( filterKernel );
@@ -140,8 +195,10 @@ void Visualizer::filterMatrix( arma::mat &mat )
     arma::subview_row<double> row = mat.row(i);
     filter.filterArray( row );
   }
+}
 
-  // Filter vertical
+void Visualizer::filterVertical( arma::mat &mat )
+{
   filter.setSourceSize( mat.n_rows );
   filter.setTargetSize( height );
   filter.computeFilterCoefficients( filterKernel );
@@ -164,7 +221,7 @@ void Visualizer::fillVertexArrayPositions()
   {
     for ( unsigned int col=0;col<width;col++ )
     {
-      (*vArray)[row*width+col].position = sf::Vector2f(col,row);
+      (*vArray)[row*width+col].position = window->mapPixelToCoords(sf::Vector2i(col,row));
     }
   }
 }
@@ -173,12 +230,38 @@ void Visualizer::resizeWindow( unsigned int newWidth, unsigned int newHeight )
 {
   width = newWidth;
   height = newHeight;
-  window->setSize(sf::Vector2u(width,height));
-  if ( vArray != NULL ) delete vArray;
+  //window->setSize(sf::Vector2u(width,height));
+  window->setView(sf::View(sf::FloatRect(0, 0, width, height)));
+  window->clear();
+  if ( vArray != NULL )
+  {
+    delete vArray;
+    vArray = NULL;
+  }
   fillVertexArrayPositions();
 }
 
 void Visualizer::restoreDefaultWindowSize()
 {
   resizeWindow(defaultWidth,defaultHeight);
+}
+
+void Visualizer::resizeWidth( unsigned int newWidth )
+{
+  resizeWindow( newWidth, height );
+}
+
+void Visualizer::resizeHeight( unsigned int newHeight )
+{
+  resizeWindow( width, newHeight );
+}
+
+void Visualizer::draw()
+{
+  if ( vArray != NULL )
+  {
+    //clog << window->getSize().x << " " << window->getSize().y << endl;
+    sf::Sprite sprite( tx->getTexture());
+    window->draw(sprite);
+  }
 }

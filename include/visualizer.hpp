@@ -38,6 +38,9 @@ public:
   /** Dump image to screen */
   void display(){ window->display(); };
 
+  /** Draw the vertex array */
+  void draw();
+
   /** Fill the window with a black background color */
   void clear(){ window->clear(sf::Color::Black); };
 
@@ -76,6 +79,7 @@ protected:
   unsigned int vArrayNcol{0};
   Colormap_t cmap{Colormap_t::VIRIDIS};
   Colormaps cmaps;
+  bool resizingEnabled{true};
 
   /** Set color corresponding to value */
   void setColor( double value, sf::Color &color ) const;
@@ -89,7 +93,19 @@ protected:
   /** Resize the window to match the matrix */
   void resizeWindow( unsigned int newWidth, unsigned int newHeight );
 
+  /** Resize width */
+  void resizeWidth( unsigned int newWidth );
+
+  /** Resize height */
+  void resizeHeight( unsigned int newHeight );
+
   /** Restores the default window height and width */
   void restoreDefaultWindowSize();
+
+  /** Filter horizontally */
+  void filterHorizontal( arma::mat &mat );
+
+  /** Filter vertically */
+  void filterVertical( arma::mat &mat );
 };
 #endif

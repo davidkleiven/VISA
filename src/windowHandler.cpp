@@ -62,6 +62,8 @@ void WindowHandler::show()
   {
     if ( plots[i]->isOpen() )
     {
+      plots[i]->clear();
+      plots[i]->draw();
       plots[i]->display();
     }
   }

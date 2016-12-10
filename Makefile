@@ -27,6 +27,9 @@ exSincFilter.out: ${ODIR}/exSincFilter.o ${OBJECTS}
 exMexicanHat.out: ${ODIR}/exMexicanHat.o
 	g++ $^ -o $@ ${GRAPHLIBS} -Wl,-rpath,./ -L ./ -larmadillo -lvisa
 
+exSmallMatrix.out: ${ODIR}/exSmallMatrix.o
+	g++ $^ -o $@ ${GRAPHLIBS} -Wl,-rpath,./ -L ./ -larmadillo -lvisa
+
 ${ODIR}/%.o: ${SDIR}/%.cpp
 	g++ -std=c++11 -fPIC -MMD -c $< -o $@ -I ${IDIR}
 
