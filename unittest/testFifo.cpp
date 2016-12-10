@@ -3,7 +3,7 @@
 
 TEST( FIFOTest, 1 )
 {
-  FIFOBuffer buffer(4);
+  visa::FIFOBuffer buffer(4);
   buffer.push_back(1.0);
   buffer.push_back(2.0);
   buffer.push_back(3.0);
