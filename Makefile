@@ -3,6 +3,7 @@ ODIR=obj
 SDIR=src
 TESTDIR=unittest
 EXDIR=Examples
+include visaInstall.mk
 
 SOURCES := visualizer.cpp visualizer1D.cpp lowPassFilter.cpp fifoBuffer.cpp colormaps.cpp gaussianKernel.cpp windowHandler.cpp
 TESTS := maintest.cpp testFifo.cpp
@@ -18,6 +19,11 @@ GRAPHLIBS=-lsfml-graphics -lsfml-window -lsfml-system
 lib: ${OBJECTS}
 	g++  -std=c++11 $^ -fPIC -shared -o libvisa.so
 
+install: lib
+	mkdir -p ${VISA_HEADER_PATH}
+	cp include/* ${VISA_HEADER_PATH}
+	cp libvisa.so ${VISA_LIB_PATH}
+	
 alltest.out: ${OBJECTS} ${TEST_OBJECTS}
 	g++ $^ -o $@ ${GRAPHLIBS} -lgtest -lgtest_main -lpthread
 
