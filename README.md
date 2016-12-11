@@ -16,3 +16,22 @@ To compile and link a application using this library add when linking
 ```bash
 ... -lsfml-graphics -lsfml-window -lsfml-system -larmadillo -lvisa
 ```
+
+# Installation
+Run the configure script
+```bash
+bash configure.sh --prefix=/install/path
+```
+The default path is */usr/local*.
+The libvisa.so will then be placed in */usr/local/lib* and
+the header files will be placed in */usr/local/include/visa*.
+
+Compile the library
+```bash
+make lib
+```
+
+Finally run
+```bash
+make install
+```
