@@ -1,5 +1,6 @@
-#include "visualizer.hpp"
-#include "windowHandler.hpp"
+//#include "visualizer.hpp"
+//#include "windowHandler.hpp"
+#include "visa.hpp"
 #include <armadillo>
 #include <cmath>
 #include <iostream>
