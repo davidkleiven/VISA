@@ -61,6 +61,7 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
     {
       restoreDefaultWindowSize();
       fillVertexArray(values);
+      return;
     }
 
     filterMatrix(values);
