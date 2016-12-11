@@ -5,3 +5,4 @@ data/*
 exSincFilter.out
 exMexicanHat.out
 exSmallMatrix.out
+visaInstall.mk
