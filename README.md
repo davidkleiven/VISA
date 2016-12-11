@@ -35,3 +35,6 @@ Finally run
 ```bash
 make install
 ```
+
+# Examples
+Some examples of how to use the library can be found in the *Examples* folder.
