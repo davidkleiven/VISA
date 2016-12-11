@@ -57,6 +57,11 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
     #ifdef VIS_DEBUG
       clog << "Rows and columns to large\n";
     #endif
+    if (( height < defaultHeight ) || (width < defaultWidth ))
+    {
+      restoreDefaultWindowSize();
+      fillVertexArray(values);
+    }
 
     filterMatrix(values);
     rowStep = static_cast<double>(values.n_rows)/static_cast<double>(height);
