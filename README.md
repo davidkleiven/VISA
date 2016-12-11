@@ -12,7 +12,7 @@ The unittests depends in addition on
   * [Google Test](https://github.com/google/googletest)
   * Pthreads
 
-To compile and link a application using this library add when linking
+To compile and link an application using this library add when linking
 ```bash
 ... -lsfml-graphics -lsfml-window -lsfml-system -larmadillo -lvisa
 ```
