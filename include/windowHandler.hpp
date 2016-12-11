@@ -1,6 +1,7 @@
 #ifndef WINDOW_HANDLER_H
 #define WINDOW_HANDLER_H
 #include "visualizer.hpp"
+#include "visualizer1D.hpp"
 
 namespace visa
 {
@@ -13,6 +14,9 @@ public:
 
   /** Add a plot that will be displayed in a separate window */
   void addPlot( const char* name );
+
+  /** Add a stander xy plot */
+  void addLinePlot( const char* name );
 
   /** Get the visualization object */
   Visualizer& get( const char* name );

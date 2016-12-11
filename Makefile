@@ -23,7 +23,7 @@ install: lib
 	mkdir -p ${VISA_HEADER_PATH}
 	cp include/* ${VISA_HEADER_PATH}
 	cp libvisa.so ${VISA_LIB_PATH}
-	
+
 alltest.out: ${OBJECTS} ${TEST_OBJECTS}
 	g++ $^ -o $@ ${GRAPHLIBS} -lgtest -lgtest_main -lpthread
 
@@ -34,6 +34,9 @@ exMexicanHat.out: ${ODIR}/exMexicanHat.o
 	g++ $^ -o $@ ${GRAPHLIBS} -Wl,-rpath,./ -L ./ -larmadillo -lvisa
 
 exSmallMatrix.out: ${ODIR}/exSmallMatrix.o
+	g++ $^ -o $@ ${GRAPHLIBS} -Wl,-rpath,./ -L ./ -larmadillo -lvisa
+
+exLinePlot.out: ${ODIR}/exLinePlot.o
 	g++ $^ -o $@ ${GRAPHLIBS} -Wl,-rpath,./ -L ./ -larmadillo -lvisa
 
 ${ODIR}/%.o: ${SDIR}/%.cpp

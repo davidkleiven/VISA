@@ -23,6 +23,16 @@ void visa::WindowHandler::addPlot( const char* name )
   }
 }
 
+void visa::WindowHandler::addLinePlot( const char* name )
+{
+  plots.push_back( new visa::Visualizer1D() );
+  plots.back()->init(name);
+  if ( active == NULL )
+  {
+    active = plots.back();
+  }
+}
+
 visa::Visualizer& visa::WindowHandler::get( const char* name )
 {
   string searchName(name);

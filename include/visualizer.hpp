@@ -20,13 +20,16 @@ public:
   ~Visualizer();
 
   /** Initialize the window handler */
-  void init( const char *windowName );
+  virtual void init( const char *windowName );
 
   /** Initialize the window handler */
   void init();
 
   /** Set values to visualize */
   void fillVertexArray( arma::mat &values );
+
+  /** Set values to visualize */
+  virtual void fillVertexArray( arma::vec &values ){};
 
   /** Checks if the window is still open */
   bool isOpen() const;
@@ -61,7 +64,11 @@ public:
   /** Save current scene */
   sf::Image capture(){ return window->capture(); };
 
+  /** Return the name of the plot */
   const std::string& getName() const { return name; };
+
+  /** Set upper and lower y-limit. Only relevant for 1D plots */
+  virtual void setLimits( double min, double max ){};
 protected:
   sf::RenderWindow *window{NULL};
   sf::View *view{NULL};

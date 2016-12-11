@@ -17,7 +17,7 @@ unsigned int visa::Visualizer1D::getY( double val ) const
   return height-indx;
 }
 
-void visa::Visualizer1D::fillVertexArray( const arma::vec &vec )
+void visa::Visualizer1D::fillVertexArray( arma::vec &vec )
 {
   if ( vArray == NULL )
   {
@@ -38,16 +38,16 @@ void visa::Visualizer1D::fillVertexArray( const arma::vec &vec )
     {
       unsigned int y1 = getY( vec( static_cast<unsigned int>(i*step)) );
       unsigned int y2 = getY( vec( static_cast<unsigned int>(i*step+step)) );
-      (*vArray)[0].position = sf::Vector2f(i,y1);
-      (*vArray)[1].position = sf::Vector2f(i+1,y2);
+      (*vArray)[0].position = window->mapPixelToCoords(sf::Vector2i(i,y1));
+      (*vArray)[1].position = window->mapPixelToCoords(sf::Vector2i(i+1,y2));
       (*vArray)[0].color = col;
       (*vArray)[1].color = col;
-      window->draw( *vArray );
+      tx->draw(*vArray);
     }
   }
   else
   {
-    unsigned int pixStep = width/vec.n_elem;
+    double pixStep = static_cast<double>(width)/vec.n_elem;
     for ( unsigned int i=0;i<vec.n_elem-1;i++ )
     {
       unsigned int y1 = getY( vec(i) );
@@ -56,7 +56,23 @@ void visa::Visualizer1D::fillVertexArray( const arma::vec &vec )
       (*vArray)[1].position = sf::Vector2f(i*pixStep+pixStep,y2);
       (*vArray)[0].color = col;
       (*vArray)[1].color = col;
-      window->draw( *vArray );
+      tx->draw(*vArray);
     }
+  }
+  tx->display();
+  sf::Sprite sprite( tx->getTexture());
+  // Draw onto screen
+  window->draw( sprite );
+}
+
+void visa::Visualizer1D::init( const char* windowname )
+{
+  visa::Visualizer::init( windowname );
+
+  // Delete the vertex array as this should be handled by this class
+  if ( vArray != NULL )
+  {
+    delete vArray;
+    vArray = NULL;
   }
 }
