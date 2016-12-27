@@ -36,11 +36,3 @@ set( HEADERFILES include/colormaps.hpp include/fifoBuffer.hpp include/gaussianKe
                  include/visa.hpp include/visualizer.hpp include/visualizer1D.hpp include/windowHandler.hpp)
 
 install( FILES ${HEADERFILES} DESTINATION ${INSTALL_INCLUDE_DIR}/visa )
-
-# Create find package file
-set( CONFFILE "VisaConfig.cmake" )
-file( WRITE ${CONFFILE} "VISA_LIBRARY=${INSTALL_LIB_DIR}/libvisa.so\n" )
-file( APPEND ${CONFFILE} "VISA_INCLUDE_DIR=${INSTALL_INCLUDE_DIR}\n" )
-
-# Install the package configure file
-install( FILES ${CONFFILE} DESTINATION ${INSTALL_LIB_DIR} )
