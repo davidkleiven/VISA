@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.6)
 project(VISA)
 
 # Install paths
-set( INSTALL_LIB_DIR "/usr/local/lib/" )
-set( INSTALL_INCLUDE_DIR "/usr/local/include/visa" )
+set( INSTALL_LIB_DIR "/usr/local/lib" )
+set( INSTALL_INCLUDE_DIR "/usr/local/include" )
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 include_directories(include)
@@ -35,5 +35,10 @@ target_link_libraries( exSmallMatrix.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} 
 set( HEADERFILES include/colormaps.hpp include/fifoBuffer.hpp include/gaussianKernel.hpp include/lowPassFilter.hpp include/lowPassFilter.tpp
                  include/visa.hpp include/visualizer.hpp include/visualizer1D.hpp include/windowHandler.hpp)
 
-install( FILES ${HEADERFILES} DESTINATION ${INSTALL_INCLUDE_DIR} )
-install( FILES visaConfig.cmake DESTINATION ${INSTALL_LIB_DIR} )
+install( FILES ${HEADERFILES} DESTINATION ${INSTALL_INCLUDE_DIR}/visa )
+
+# Create find package file
+set( CONFFILE "VisaConfig.cmake" )
+file( WRITE ${CONFFILE} "VISA_LIBRARY=${INSTALL_LIB_DIR}/libvisa.so\n" )
+file( APPEND ${CONFFILE} "VISA_INCLUDE_DIR=${INSTALL_INCLUDE_DIR}\n" )
+install( FILES ${VisaConfig.cmake} DESTINATION ${INSTALL_LIB_DIR} )

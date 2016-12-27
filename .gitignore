@@ -14,3 +14,4 @@ src/Makefile
 src/CMakeFiles/*
 exLinePlot.out
 install_manifest.txt
+VisaConfig.cmake
