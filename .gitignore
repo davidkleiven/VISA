@@ -6,3 +6,9 @@ exSincFilter.out
 exMexicanHat.out
 exSmallMatrix.out
 visaInstall.mk
+CMakeFiles/*
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+src/Makefile
+src/CMakeFiles/*
