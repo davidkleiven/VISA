@@ -12,3 +12,5 @@ cmake_install.cmake
 Makefile
 src/Makefile
 src/CMakeFiles/*
+exLinePlot.out
+install_manifest.txt
