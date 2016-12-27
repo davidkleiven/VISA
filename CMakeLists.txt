@@ -41,4 +41,6 @@ install( FILES ${HEADERFILES} DESTINATION ${INSTALL_INCLUDE_DIR}/visa )
 set( CONFFILE "VisaConfig.cmake" )
 file( WRITE ${CONFFILE} "VISA_LIBRARY=${INSTALL_LIB_DIR}/libvisa.so\n" )
 file( APPEND ${CONFFILE} "VISA_INCLUDE_DIR=${INSTALL_INCLUDE_DIR}\n" )
-install( FILES ${VisaConfig.cmake} DESTINATION ${INSTALL_LIB_DIR} )
+
+# Install the package configure file
+install( FILES ${CONFFILE} DESTINATION ${INSTALL_LIB_DIR} )
