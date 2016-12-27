@@ -21,6 +21,6 @@ add_executable( exSincFilter.out Examples/exSincFilter.cpp)
 target_link_libraries( exSincFilter.out ${SFML_LIBRARIES} libvisa.so)
 
 add_executable( exSmallMatrix.out Examples/exSmallMatrix.cpp)
-target_link_libraries( exSmallMatrix.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} libvisa.so)
+target_link_libraries( exSmallMatrix.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} ${CMAKE_CURRENT_SOURCE_DIR}/src/libvisa.so)
 
 # Install target
