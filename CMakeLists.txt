@@ -36,3 +36,4 @@ set( HEADERFILES include/colormaps.hpp include/fifoBuffer.hpp include/gaussianKe
                  include/visa.hpp include/visualizer.hpp include/visualizer1D.hpp include/windowHandler.hpp)
 
 install( FILES ${HEADERFILES} DESTINATION ${INSTALL_INCLUDE_DIR} )
+install( FILES visaConfig.cmake DESTINATION ${INSTALL_LIB_DIR} )
