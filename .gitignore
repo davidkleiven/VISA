@@ -15,3 +15,6 @@ src/CMakeFiles/*
 exLinePlot.out
 install_manifest.txt
 VisaConfig.cmake
+CTest*
+Testing/*
+unittest/CMakeFiles/*

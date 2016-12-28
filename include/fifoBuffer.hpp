@@ -3,19 +3,24 @@
 #include <iostream>
 
 namespace visa{
+
+template <class T>
 class FIFOBuffer
 {
 public:
   explicit FIFOBuffer( unsigned int size );
   ~FIFOBuffer();
-  double get( unsigned int n ) const;
-  void push_back( double element );
-  friend std::ostream& operator <<(std::ostream& out, const FIFOBuffer &buffer );
+  T get( unsigned int n ) const;
+  void push_back( T element );
+  template <class U>
+  friend std::ostream& operator <<(std::ostream& out, const FIFOBuffer<U> &buffer );
 private:
   unsigned int head{0};
   unsigned int size{0};
-  double *values;
+  T *values;
 };
-std::ostream& operator <<(std::ostream& out, const FIFOBuffer &buffer );
+
+template <class T>
+std::ostream& operator <<(std::ostream& out, const FIFOBuffer<T> &buffer );
 }; // namespace
 #endif

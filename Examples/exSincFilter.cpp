@@ -31,7 +31,7 @@ int main()
   filter.setSourceSize( linearRamp.size() );
   filter.setTargetSize( linearRamp.size()/2 );
   filter.computeFilterCoefficients( kernel );
-  filter.filterArray( linearRamp );
+  filter.filterArray<vector<double>, double>( linearRamp );
 
   // Write results to file
   ofstream out;

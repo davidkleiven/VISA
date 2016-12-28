@@ -199,7 +199,7 @@ void visa::Visualizer::filterHorizontal( arma::mat &mat )
   for ( unsigned int i=0;i<mat.n_rows;i++ )
   {
     arma::subview_row<double> row = mat.row(i);
-    filter.filterArray( row );
+    filter.filterArray<arma::subview_row<double>, double>( row );
   }
 }
 
@@ -212,7 +212,7 @@ void visa::Visualizer::filterVertical( arma::mat &mat )
   for ( unsigned int i=0;i<mat.n_cols;i++ )
   {
     arma::subview_col<double> col = mat.col(i);
-    filter.filterArray( col );
+    filter.filterArray<arma::subview_col<double>, double>( col );
   }
 }
 

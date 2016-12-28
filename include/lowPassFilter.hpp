@@ -23,7 +23,7 @@ public:
   void computeFilterCoefficients( const kernelType &kernel );
 
   /** Runs the sinc filter through the array. arrayType must implement operator[] */
-  template <class arrayType>
+  template <class arrayType, class elemType>
   void filterArray( arrayType &array ) const;
 private:
   unsigned int sourceSize{0};

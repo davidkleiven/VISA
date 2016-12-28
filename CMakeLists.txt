@@ -16,6 +16,7 @@ include_directories(SFML_INCLUDE_DIR)
 find_package(Armadillo REQUIRED )
 include_directories(ARMADILLO_INCLUDE_DIR)
 
+add_subdirectory(unittest)
 # Add the examples
 add_executable( exLinePlot.out Examples/exLinePlot.cpp )
 target_link_libraries( exLinePlot.out ${SFML_LIBRARIES} libvisa.so)
@@ -36,3 +37,6 @@ set( HEADERFILES include/colormaps.hpp include/fifoBuffer.hpp include/gaussianKe
                  include/visa.hpp include/visualizer.hpp include/visualizer1D.hpp include/windowHandler.hpp)
 
 install( FILES ${HEADERFILES} DESTINATION ${INSTALL_INCLUDE_DIR}/visa )
+
+enable_testing()
+add_test(NAME visaTest COMMAND ./unittest/alltest.out )

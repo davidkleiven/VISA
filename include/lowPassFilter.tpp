@@ -1,8 +1,8 @@
-template <class arrayType>
+template <class arrayType, class elemType>
 void visa::LowPassFilter::filterArray( arrayType &array ) const
 {
   assert ( filterCoeff.size() > 0 );
-  visa::FIFOBuffer buffer( filterCoeff.size() );
+  visa::FIFOBuffer<elemType> buffer( filterCoeff.size() );
 
 
   // Initialize buffer
