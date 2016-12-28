@@ -20,7 +20,7 @@ void visa::LowPassFilter::filterArray( arrayType &array ) const
   for ( unsigned int i=0;i<sourceSize-filterCoeff.size()/2;i++)
   {
     buffer.push_back(array[i+filterCoeff.size()/2-1]);
-    double newval = 0.0;
+    elemType newval = 0.0;
     for ( unsigned int j=0;j<filterCoeff.size();j++ )
     {
       newval += buffer.get(j)*filterCoeff[j];
@@ -32,7 +32,7 @@ void visa::LowPassFilter::filterArray( arrayType &array ) const
   for ( unsigned int i=sourceSize-filterCoeff.size()/2; i<sourceSize;i++ )
   {
     buffer.push_back(array[sourceSize-1]);
-    double newval = 0.0;
+    elemType newval = 0.0;
     for ( unsigned int j=0;j<filterCoeff.size();j++ )
     {
       newval += buffer.get(j)*filterCoeff[j];
