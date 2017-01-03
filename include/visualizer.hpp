@@ -49,10 +49,10 @@ public:
   /** Fill the window with a black background color */
   void clear(){ window->clear(sf::Color::Black); };
 
-  /** Set upper limit of the colorscale */
+  /** Set upper limit of the colorscale. Depricated have no effect */
   void setColorMax( double max ){ colorMax = max; };
 
-  /** Set the lower limit for the colorscale */
+  /** Set the lower limit for the colorscale. Depricated have no effect */
   void setColorMin( double min ){ colorMin = min; };
 
   /** Set color map */
@@ -116,6 +116,9 @@ protected:
 
   /** Filter vertically */
   void filterVertical( arma::mat &mat );
+
+  /** Set limits based on max and min value */
+  void setMaxMinColors( arma::mat &mat );
 };
 }; // namespace
 #endif

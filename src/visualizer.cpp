@@ -50,6 +50,7 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
   {
     fillVertexArrayPositions();
   }
+  setMaxMinColors( values );
 
   double rowStep, colStep;
   if (( values.n_rows > height ) && (values.n_cols > width ))
@@ -270,4 +271,10 @@ void visa::Visualizer::draw()
     sf::Sprite sprite( tx->getTexture());
     window->draw(sprite);
   }
+}
+
+void visa::Visualizer::setMaxMinColors( arma::mat &intensity )
+{
+  colorMin = intensity.min();
+  colorMax = intensity.max();
 }
