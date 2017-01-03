@@ -18,3 +18,4 @@ VisaConfig.cmake
 CTest*
 Testing/*
 unittest/CMakeFiles/*
+cmap.csv
