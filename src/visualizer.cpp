@@ -170,19 +170,7 @@ void visa::Visualizer::setColor( double value, sf::Color &color ) const
   indx  = indx > 255 ? 255:indx;
   indx = indx < 0 ? 0:indx;
 
-  switch ( cmap )
-  {
-    case Colormap_t::VIRIDIS:
-      color.r = 255.0*cmaps.viridis[indx][0];
-      color.g = 255.0*cmaps.viridis[indx][1];
-      color.b = 255.0*cmaps.viridis[indx][2];
-      break;
-    case Colormap_t::GREYSCALE:
-      color.r = indx;
-      color.g = indx;
-      color.b = indx;
-      break;
-  }
+  cmaps.setColor( indx, color );
 }
 
 void visa::Visualizer::filterMatrix( arma::mat &mat )

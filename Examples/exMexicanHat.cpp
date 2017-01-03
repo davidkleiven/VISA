@@ -13,10 +13,10 @@ int main( int argc, char** argv )
   visa::WindowHandler plots;
   try
   {
+    visa::Colormaps::Colormap_t cmap = visa::Colormaps::Colormap_t::NIPY_SPECTRAL;
     plots.addPlot( "Mexican Hat" );
     plots.setActive( "Mexican Hat" );
-    plots.getActive().setColorMax(1.0);
-    plots.getActive().setColorMin(-1.0);
+    plots.getActive().setCmap( cmap );
     arma::mat matrix(700,700);
     mexicanHat( 0.1, matrix );
     plots.getActive().fillVertexArray( matrix );

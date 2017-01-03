@@ -14,8 +14,6 @@ namespace visa
 class Visualizer
 {
 public:
-  /** Available colomaps */
-  enum class Colormap_t {GREYSCALE, VIRIDIS};
   Visualizer();
   ~Visualizer();
 
@@ -56,7 +54,7 @@ public:
   void setColorMin( double min ){ colorMin = min; };
 
   /** Set color map */
-  void setCmap( Colormap_t cm ){ cmap = cm; };
+  void setCmap( Colormaps::Colormap_t cm ){ cmaps.setMap(cm); };
 
   /** Down sample by simple averaging */
   static double average( const arma::mat &mat );
@@ -86,7 +84,6 @@ protected:
   double colorMin{0.0};
   unsigned int vArrayNrow{0};
   unsigned int vArrayNcol{0};
-  Colormap_t cmap{Colormap_t::VIRIDIS};
   Colormaps cmaps;
   bool resizingEnabled{true};
 
