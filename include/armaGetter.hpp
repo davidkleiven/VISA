@@ -1,6 +1,11 @@
 #ifndef ARMA_GETTER_H
 #define ARMA_GETTER_H
 #include <armadillo>
+/**
+This is some templated classes for getting an element from an armadillo matrix.
+They are written to both be able to efficiently filter both rows and
+columns of an Armadillo matrix using the lowPassFilter class.
+*/
 
 namespace visa
 {

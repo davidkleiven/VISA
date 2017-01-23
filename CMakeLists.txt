@@ -34,7 +34,7 @@ target_link_libraries( exSmallMatrix.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} 
 # Install target
 
 set( HEADERFILES include/colormaps.hpp include/fifoBuffer.hpp include/gaussianKernel.hpp include/lowPassFilter.hpp include/lowPassFilter.tpp
-                 include/visa.hpp include/visualizer.hpp include/visualizer1D.hpp include/windowHandler.hpp)
+include/visa.hpp include/visualizer.hpp include/visualizer1D.hpp include/windowHandler.hpp include/armaGetter.hpp)
 
 install( FILES ${HEADERFILES} DESTINATION ${INSTALL_INCLUDE_DIR}/visa )
 
