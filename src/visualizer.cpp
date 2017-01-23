@@ -185,10 +185,12 @@ void visa::Visualizer::filterHorizontal( arma::mat &mat )
   filter.setTargetSize( width );
   filter.computeFilterCoefficients( filterKernel );
 
+  visa::ArmaGetter<double,visa::ArmaMatrix_t::ROW> getter;
   for ( unsigned int i=0;i<mat.n_rows;i++ )
   {
-    arma::subview_row<double> row = mat.row(i);
-    filter.filterArray<arma::subview_row<double>, double>( row );
+    getter.fixedIndx = i;
+    //arma::subview_row<double> row = mat.row(i);
+    filter.filterArray( mat, getter );
   }
 }
 
@@ -198,10 +200,11 @@ void visa::Visualizer::filterVertical( arma::mat &mat )
   filter.setTargetSize( height );
   filter.computeFilterCoefficients( filterKernel );
 
+  visa::ArmaGetter<double, visa::ArmaMatrix_t::COL> getter;
   for ( unsigned int i=0;i<mat.n_cols;i++ )
   {
-    arma::subview_col<double> col = mat.col(i);
-    filter.filterArray<arma::subview_col<double>, double>( col );
+    getter.fixedIndx = i;
+    filter.filterArray( mat, getter );
   }
 }
 

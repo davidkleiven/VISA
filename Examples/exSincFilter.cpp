@@ -20,18 +20,23 @@ double alternating( unsigned int n )
 int main()
 {
   vector<double> linearRamp;
+    arma::mat matrix( 100, 1 );
   for ( unsigned int i=0;i<100;i++ )
   {
     linearRamp.push_back( alternating(i) );
+    matrix(i,0) = linearRamp[i];
   }
   vector<double> unfiltered(linearRamp);
+
+  visa::ArmaGetter<double, visa::ArmaMatrix_t::COL> getter;
+  getter.fixedIndx = 0;
 
   visa::GaussianKernel kernel;
   visa::LowPassFilter filter;
   filter.setSourceSize( linearRamp.size() );
   filter.setTargetSize( linearRamp.size()/2 );
   filter.computeFilterCoefficients( kernel );
-  filter.filterArray<vector<double>, double>( linearRamp );
+  filter.filterArray( matrix, getter );
 
   // Write results to file
   ofstream out;
@@ -46,7 +51,7 @@ int main()
   out << "# Original signal, filtered signal\n";
   for ( unsigned int i=0;i<linearRamp.size();i++ )
   {
-    out << unfiltered[i] << "," << linearRamp[i] << "\n";
+    out << unfiltered[i] << "," << matrix(i,0) << "\n";
   }
   out.close();
   cout << "Data written to " << fname << endl;
