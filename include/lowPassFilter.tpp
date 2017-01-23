@@ -1,6 +1,9 @@
 template <class elemType, visa::ArmaMatrix_t dir>
 void visa::LowPassFilter::filterArray( arma::Mat<elemType> &array, visa::ArmaGetter<elemType,dir> &getter ) const
 {
+
+  if ( targetSize == sourceSize ) return;
+  
   assert ( filterCoeff.size() > 0 );
   visa::FIFOBuffer<elemType> buffer( filterCoeff.size() );
 
