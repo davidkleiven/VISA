@@ -16,7 +16,7 @@ namespace visa
   class ArmaGetter
   {
   public:
-    elemType operator()( arma::Mat<elemType> &mat, unsigned int indx ) const { return mat(indx, fixedIndx); };
+    const elemType& operator()( arma::Mat<elemType> &mat, unsigned int indx ) const { return mat(indx, fixedIndx); };
     elemType& operator()( arma::Mat<elemType> &mat, unsigned int indx ){ return mat(indx, fixedIndx); };
     unsigned int fixedIndx{0};
   };
@@ -26,7 +26,7 @@ namespace visa
   class ArmaGetter<elemType, ArmaMatrix_t::ROW>
   {
   public:
-    elemType operator()( arma::Mat<elemType> &mat, unsigned int indx ) const { return mat(fixedIndx, indx); };
+    const elemType& operator()( arma::Mat<elemType> &mat, unsigned int indx ) const { return mat(fixedIndx, indx); };
     elemType& operator()( arma::Mat<elemType> &mat, unsigned int indx ){ return mat(fixedIndx, indx); };
     unsigned int fixedIndx{0};
   };
@@ -36,7 +36,7 @@ namespace visa
   class ArmaGetter<elemType, ArmaMatrix_t::VECTOR>
   {
   public:
-    elemType operator()( arma::Mat<elemType> &vec, unsigned int indx ) const { return vec(indx); };
+    const elemType& operator()( arma::Mat<elemType> &vec, unsigned int indx ) const { return vec(indx); };
     elemType& operator()( arma::Mat<elemType> &vec, unsigned int indx ){ return vec(indx); };
     unsigned int fixedIndx{0}; // Unused, but needs to be declared for compatibility with the low pass filter
   };
