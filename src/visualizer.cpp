@@ -50,7 +50,11 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
   {
     fillVertexArrayPositions();
   }
-  setMaxMinColors( values );
+
+  if ( !colorLimitsSetByUser )
+  {
+    setMaxMinColors( values );
+  }
 
   double rowStep, colStep;
   if (( values.n_rows > height ) && (values.n_cols > width ))
@@ -268,4 +272,11 @@ void visa::Visualizer::setMaxMinColors( arma::mat &intensity )
 {
   colorMin = intensity.min();
   colorMax = intensity.max();
+}
+
+void visa::Visualizer::setColorLim( double min, double max )
+{
+  colorLimitsSetByUser = true;
+  colorMin = min;
+  colorMax = max;
 }

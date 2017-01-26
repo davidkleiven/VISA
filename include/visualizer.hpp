@@ -47,11 +47,14 @@ public:
   /** Fill the window with a black background color */
   void clear(){ window->clear(sf::Color::Black); };
 
-  /** Set upper limit of the colorscale. Depricated have no effect */
+  /** Set upper limit of the colorscale */
   void setColorMax( double max ){ colorMax = max; };
 
-  /** Set the lower limit for the colorscale. Depricated have no effect */
+  /** Set the lower limit for the colorscale */
   void setColorMin( double min ){ colorMin = min; };
+
+  /** Set both colorlimits (provided for convenience) */
+  void setColorLim( double min, double max );
 
   /** Set color map */
   void setCmap( Colormaps::Colormap_t cm ){ cmaps.setMap(cm); };
@@ -86,6 +89,7 @@ protected:
   unsigned int vArrayNcol{0};
   Colormaps cmaps;
   bool resizingEnabled{true};
+  bool colorLimitsSetByUser{false};
 
   /** Set color corresponding to value */
   void setColor( double value, sf::Color &color ) const;
