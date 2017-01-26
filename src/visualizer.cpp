@@ -15,6 +15,7 @@ visa::Visualizer::~Visualizer()
 
   if ( vArray != NULL ) delete vArray;
   if ( tx != NULL ) delete tx;
+  if ( pixels != NULL ) delete [] pixels;
 }
 
 void visa::Visualizer::init( const char *windowName )
@@ -26,7 +27,9 @@ void visa::Visualizer::init( const char *windowName )
   window->setVerticalSyncEnabled(true);
   fillVertexArrayPositions();
 
-  tx = new sf::RenderTexture();
+  pixels = new sf::Uint8[width*height*4];
+
+  tx = new sf::Texture();
 
   //if ( !tx->create(height, width) )
   if ( !tx->create(width, height) )
@@ -126,12 +129,20 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
     {
       sf::Color color;
       setColor( values(row*rowStep, col*colStep), color);
-      (*vArray)[row*width+col].color = color;
+      pixels[4*(width*row+col)] = color.r;
+      pixels[4*(width*row+col)+1] = color.g;
+      pixels[4*(width*row+col)+2] = color.b;
+      pixels[4*(width*row+col)+3] = 255;
+
+      //(*vArray)[row*width+col].color = color;
     }
   }
-  tx->draw(*vArray);
-  tx->display();
-  sf::Sprite sprite( tx->getTexture());
+  //tx->draw(*vArray);
+  //tx->display();
+  img.create( width, height, pixels );
+  tx->update( img );
+  sf::Sprite sprite( *tx );
+  //img.create( width, height, pixels );
   // Draw onto screen
   window->draw( sprite );
  //window->draw(*vArray);
@@ -263,7 +274,7 @@ void visa::Visualizer::draw()
   if ( vArray != NULL )
   {
     //clog << window->getSize().x << " " << window->getSize().y << endl;
-    sf::Sprite sprite( tx->getTexture());
+    sf::Sprite sprite( *tx );
     window->draw(sprite);
   }
 }

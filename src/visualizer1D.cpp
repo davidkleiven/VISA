@@ -42,7 +42,7 @@ void visa::Visualizer1D::fillVertexArray( arma::vec &vec )
       (*vArray)[1].position = window->mapPixelToCoords(sf::Vector2i(i+1,y2));
       (*vArray)[0].color = col;
       (*vArray)[1].color = col;
-      tx->draw(*vArray);
+      //tx->update(*vArray);
     }
   }
   else
@@ -56,11 +56,11 @@ void visa::Visualizer1D::fillVertexArray( arma::vec &vec )
       (*vArray)[1].position = sf::Vector2f(i*pixStep+pixStep,y2);
       (*vArray)[0].color = col;
       (*vArray)[1].color = col;
-      tx->draw(*vArray);
+      //tx->update(*vArray);
     }
   }
-  tx->display();
-  sf::Sprite sprite( tx->getTexture());
+  //tx->display();
+  sf::Sprite sprite( *tx );
   // Draw onto screen
   window->draw( sprite );
 }
