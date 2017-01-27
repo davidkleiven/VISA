@@ -2,6 +2,8 @@
 cmake_minimum_required(VERSION 3.6)
 project(VISA)
 
+add_definitions( -DARMA_NO_DEBUG ) # Disable Armadillo debug checks
+
 # Install paths
 set( INSTALL_LIB_DIR "/usr/local/lib" )
 set( INSTALL_INCLUDE_DIR "/usr/local/include" )
