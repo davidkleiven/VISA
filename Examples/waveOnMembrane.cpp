@@ -33,7 +33,7 @@ int main( int argc, char** argv )
       }
     }
 
-    for ( unsigned int t=0;t<1000;t++ )
+    for ( unsigned int t=0;t<300;t++ )
     {
       arma::mat timesignal = solution*sin( freq*t );
       plots.get("Eigenmode").fillVertexArray( timesignal );

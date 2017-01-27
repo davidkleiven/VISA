@@ -99,9 +99,6 @@ protected:
   /** Run the matrix through the low pass filter */
   void filterMatrix( arma::mat &mat );
 
-  /** Insert the positions in the vertex array */
-  void fillVertexArrayPositions();
-
   /** Resize the window to match the matrix */
   void resizeWindow( unsigned int newWidth, unsigned int newHeight );
 
