@@ -74,10 +74,11 @@ protected:
   sf::RenderWindow *window{NULL};
   sf::View *view{NULL};
   sf::VertexArray *vArray{NULL};
-  sf::RenderTexture *tx{NULL};
+  sf::Texture *tx{NULL};
   visa::LowPassFilter filter;
   visa::GaussianKernel filterKernel;
   std::string name;
+  sf::Image img;
 
   unsigned int width{640};
   unsigned int height{480};
@@ -90,15 +91,13 @@ protected:
   Colormaps cmaps;
   bool resizingEnabled{true};
   bool colorLimitsSetByUser{false};
+  sf::Uint8 *pixels{NULL};
 
   /** Set color corresponding to value */
   void setColor( double value, sf::Color &color ) const;
 
   /** Run the matrix through the low pass filter */
   void filterMatrix( arma::mat &mat );
-
-  /** Insert the positions in the vertex array */
-  void fillVertexArrayPositions();
 
   /** Resize the window to match the matrix */
   void resizeWindow( unsigned int newWidth, unsigned int newHeight );

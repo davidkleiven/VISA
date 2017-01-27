@@ -15,6 +15,7 @@ visa::Visualizer::~Visualizer()
 
   if ( vArray != NULL ) delete vArray;
   if ( tx != NULL ) delete tx;
+  if ( pixels != NULL ) delete [] pixels;
 }
 
 void visa::Visualizer::init( const char *windowName )
@@ -24,9 +25,10 @@ void visa::Visualizer::init( const char *windowName )
   window->setKeyRepeatEnabled(false);
   window->clear( sf::Color::Black );
   window->setVerticalSyncEnabled(true);
-  fillVertexArrayPositions();
 
-  tx = new sf::RenderTexture();
+  pixels = new sf::Uint8[width*height*4];
+
+  tx = new sf::Texture();
 
   //if ( !tx->create(height, width) )
   if ( !tx->create(width, height) )
@@ -46,11 +48,6 @@ void visa::Visualizer::init()
 
 void visa::Visualizer::fillVertexArray( arma::mat &values )
 {
-  if ( vArray == NULL )
-  {
-    fillVertexArrayPositions();
-  }
-
   if ( !colorLimitsSetByUser )
   {
     setMaxMinColors( values );
@@ -62,7 +59,7 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
     #ifdef VIS_DEBUG
       clog << "Rows and columns to large\n";
     #endif
-    if (( height < defaultHeight ) || (width < defaultWidth ))
+    if (( height != defaultHeight ) || (width != defaultWidth ))
     {
       restoreDefaultWindowSize();
       fillVertexArray(values);
@@ -78,7 +75,9 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
     #ifdef VIS_DEBUG
       clog << "Rows and columns to small\n";
     #endif
-    resizeWindow(values.n_cols, values.n_rows);
+    //resizeWindow(values.n_cols, values.n_rows);
+    width = values.n_cols;
+    height = values.n_rows;
     rowStep = 1.0;
     colStep = 1.0;
   }
@@ -95,7 +94,8 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
     #ifdef VIS_DEBUG
       clog << "Rows to small\n";
     #endif
-    resizeWindow(width, values.n_rows);
+    //resizeWindow(width, values.n_rows);
+    height = values.n_rows;
     rowStep = 1.0;
     colStep = static_cast<double>(values.n_cols)/static_cast<double>(width);
     filterHorizontal( values );
@@ -105,7 +105,8 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
     #ifdef VIS_DEBUG
       clog << "Columns to small\n";
     #endif
-    resizeWindow( values.n_cols, height );
+    //resizeWindow( values.n_cols, height );
+    width = values.n_cols;
     rowStep = static_cast<double>(values.n_rows)/static_cast<double>(height);
     colStep = 1.0;
     filterVertical( values );
@@ -115,7 +116,9 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
     #ifdef VIS_DEBUG
       clog << "Else clause\n";
     #endif
-    resizeWindow(values.n_cols, values.n_rows);
+    //sresizeWindow(values.n_cols, values.n_rows);
+    width = values.n_cols;
+    height = values.n_cols;
     rowStep = 1;
     colStep = 1;
   }
@@ -126,15 +129,20 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
     {
       sf::Color color;
       setColor( values(row*rowStep, col*colStep), color);
-      (*vArray)[row*width+col].color = color;
+      pixels[4*(width*row+col)] = color.r;
+      pixels[4*(width*row+col)+1] = color.g;
+      pixels[4*(width*row+col)+2] = color.b;
+      pixels[4*(width*row+col)+3] = 255;
     }
   }
-  tx->draw(*vArray);
-  tx->display();
-  sf::Sprite sprite( tx->getTexture());
+
+  img.create( width, height, pixels );
+  tx->update( img );
+  sf::Sprite sprite( *tx );
+
   // Draw onto screen
   window->draw( sprite );
- //window->draw(*vArray);
+
 }
 
 bool visa::Visualizer::isOpen() const
@@ -153,19 +161,6 @@ bool visa::Visualizer::pollEvent( sf::Event &event ) const
     return window->pollEvent( event );
   }
   return false;
-}
-
-double visa::Visualizer::average( const arma::mat &mat )
-{
-  double avg = 0.0;
-  for ( unsigned int i=0;i<mat.n_rows;i++ )
-  {
-    for ( unsigned int j=0;j<mat.n_cols;j++ )
-    {
-      avg += mat(i,j);
-    }
-  }
-  return avg/(mat.n_rows*mat.n_cols);
 }
 
 void visa::Visualizer::setColor( double value, sf::Color &color ) const
@@ -212,35 +207,10 @@ void visa::Visualizer::filterVertical( arma::mat &mat )
   }
 }
 
-void visa::Visualizer::fillVertexArrayPositions()
-{
-  if ( vArray == NULL )
-  {
-    vArray = new sf::VertexArray(sf::Points, width*height);
-  }
-
-  for ( unsigned int row=0;row<height;row++ )
-  {
-    for ( unsigned int col=0;col<width;col++ )
-    {
-      (*vArray)[row*width+col].position = window->mapPixelToCoords(sf::Vector2i(col,row));
-    }
-  }
-}
-
 void visa::Visualizer::resizeWindow( unsigned int newWidth, unsigned int newHeight )
 {
   width = newWidth;
   height = newHeight;
-  //window->setSize(sf::Vector2u(width,height));
-  window->setView(sf::View(sf::FloatRect(0, 0, width, height)));
-  window->clear();
-  if ( vArray != NULL )
-  {
-    delete vArray;
-    vArray = NULL;
-  }
-  fillVertexArrayPositions();
 }
 
 void visa::Visualizer::restoreDefaultWindowSize()
@@ -260,12 +230,8 @@ void visa::Visualizer::resizeHeight( unsigned int newHeight )
 
 void visa::Visualizer::draw()
 {
-  if ( vArray != NULL )
-  {
-    //clog << window->getSize().x << " " << window->getSize().y << endl;
-    sf::Sprite sprite( tx->getTexture());
-    window->draw(sprite);
-  }
+  sf::Sprite sprite( *tx );
+  window->draw(sprite);
 }
 
 void visa::Visualizer::setMaxMinColors( arma::mat &intensity )
