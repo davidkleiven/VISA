@@ -18,9 +18,9 @@ To compile and link an application using this library add when linking
 ```
 
 # Installation
-Run the configure script
+Run
 ```bash
-bash configure.sh --prefix=/install/path
+cmake .
 ```
 The default path is */usr/local*.
 The libvisa.so will then be placed in */usr/local/lib* and
@@ -28,13 +28,15 @@ the header files will be placed in */usr/local/include/visa*.
 
 Compile the library
 ```bash
-make lib
+make
 ```
 
 Finally run
 ```bash
 make install
 ```
+
+Note that the *ARMA_NO_DEBUG* is set which means that the library will no perform bounds checking.
 
 # Examples
 Some examples of how to use the library can be found in the *Examples* folder.
