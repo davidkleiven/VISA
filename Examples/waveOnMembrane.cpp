@@ -7,7 +7,7 @@
 using namespace std;
 
 const double PI = acos(-1.0);
-double Lx = 800.0;
+double Lx = 500.0;
 double Ly = 800.0;
 double freq = 0.05;
 
@@ -24,7 +24,7 @@ int main( int argc, char** argv )
   plots.get("Eigenmode").setColorLim( -1.0, 1.0 );
   try
   {
-    arma::mat solution(Lx,Ly);
+    arma::mat solution(Ly,Lx);
     for ( unsigned int ix=0;ix<Lx;ix++ )
     {
       for ( unsigned int iy=0;iy<Ly;iy++ )

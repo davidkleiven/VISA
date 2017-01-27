@@ -89,7 +89,7 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
     rowStep = 1;
     colStep = 1;
   }
-  else if ( values.n_rows < height )
+  else if ( values.n_rows <= height )
   {
     #ifdef VIS_DEBUG
       clog << "Rows to small\n";
@@ -100,7 +100,7 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
     colStep = static_cast<double>(values.n_cols)/static_cast<double>(width);
     filterHorizontal( values );
   }
-  else if ( values.n_cols < width )
+  else if ( values.n_cols <= width )
   {
     #ifdef VIS_DEBUG
       clog << "Columns to small\n";
