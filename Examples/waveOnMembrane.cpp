@@ -7,13 +7,24 @@
 using namespace std;
 
 const double PI = acos(-1.0);
-double Lx = 500.0;
+double Lx = 800.0;
 double Ly = 800.0;
 double freq = 0.05;
 
 double eigenMode( double x, double y, unsigned int nx, unsigned int ny )
 {
   return sin( nx*PI*x/Lx)*sin( ny*PI*y/Ly);
+}
+
+void parallelDoubleMultiply( const arma::mat &in, arma::mat &out, double value )
+{
+  #pragma omp parallel for
+  for ( unsigned int i = 0;i<in.n_rows*in.n_cols;i++ )
+  {
+    unsigned int row = i%in.n_rows;
+    unsigned int col = i/in.n_rows;
+    out(row,col) = value*in(row,col);
+  }
 }
 
 int main( int argc, char** argv )
@@ -33,9 +44,11 @@ int main( int argc, char** argv )
       }
     }
 
+    arma::mat timesignal( solution );
     for ( unsigned int t=0;t<100;t++ )
     {
-      arma::mat timesignal = solution*sin( freq*t );
+      //timesignal = solution*sin( freq*t );
+      parallelDoubleMultiply( solution, timesignal, sin(freq*t) );
       plots.get("Eigenmode").fillVertexArray( timesignal );
       plots.show();
       plots.get("Eigenmode").clear();
