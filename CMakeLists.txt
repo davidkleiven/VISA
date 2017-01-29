@@ -4,12 +4,17 @@ project(VISA)
 
 set( CMAKE_CXX_STANDARD 11 )
 add_definitions( -DARMA_NO_DEBUG ) # Disable Armadillo debug checks
-set( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-fopenmp")
 
 # Install paths
 set( INSTALL_LIB_DIR "/usr/local/lib" )
 set( INSTALL_INCLUDE_DIR "/usr/local/include" )
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+find_package(OpenMP)
+if ( OPENMP_FOUND )
+  set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+  set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}" )
+endif()
 
 include_directories(include)
 add_subdirectory(src)
@@ -36,7 +41,7 @@ target_link_libraries( exSmallMatrix.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} 
 target_link_libraries( exSmallMatrix.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} visa)
 
 add_executable( waveOnMembrane.out Examples/waveOnMembrane.cpp)
-target_link_libraries( waveOnMembrane.out ${SFML_LIBRARIES} libvisa.so)
+target_link_libraries( waveOnMembrane.out ${SFML_LIBRARIES} ${CMAKE_CURRENT_SOURCE_DIR}/src/libvisa.so)
 
 # Install target
 
