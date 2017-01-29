@@ -2,6 +2,7 @@
 cmake_minimum_required(VERSION 3.6)
 project(VISA)
 
+set( CMAKE_CXX_STANDARD 11 )
 # Install paths
 set( INSTALL_LIB_DIR "/usr/local/lib" )
 set( INSTALL_INCLUDE_DIR "/usr/local/include" )
