@@ -1,6 +1,9 @@
-template <class arrayType, class elemType>
-void visa::LowPassFilter::filterArray( arrayType &array ) const
+template <class elemType, visa::ArmaMatrix_t dir>
+void visa::LowPassFilter::filterArray( arma::Mat<elemType> &array, visa::ArmaGetter<elemType,dir> &getter ) const
 {
+
+  if ( targetSize == sourceSize ) return;
+  
   assert ( filterCoeff.size() > 0 );
   visa::FIFOBuffer<elemType> buffer( filterCoeff.size() );
 
@@ -8,36 +11,36 @@ void visa::LowPassFilter::filterArray( arrayType &array ) const
   // Initialize buffer
   for ( unsigned int i=0;i<filterCoeff.size()/2;i++)
   {
-    buffer.push_back(array[0]);
+    buffer.push_back( getter(array,0) );
   }
 
   for ( unsigned int i=0;i<filterCoeff.size()/2-1;i++)
   {
-    buffer.push_back(array[i]);
+    buffer.push_back( getter(array,i) );
   }
 
   // Perform filtering
   for ( unsigned int i=0;i<sourceSize-filterCoeff.size()/2;i++)
   {
-    buffer.push_back(array[i+filterCoeff.size()/2-1]);
+    buffer.push_back( getter( array, i+filterCoeff.size()/2-1 ) );
     elemType newval = 0.0;
     for ( unsigned int j=0;j<filterCoeff.size();j++ )
     {
       newval += buffer.get(j)*filterCoeff[j];
     }
-    array[i] = newval;
+    getter( array, i ) = newval;
   }
 
   // Do last part
   for ( unsigned int i=sourceSize-filterCoeff.size()/2; i<sourceSize;i++ )
   {
-    buffer.push_back(array[sourceSize-1]);
+    buffer.push_back( getter(array, sourceSize-1) );
     elemType newval = 0.0;
     for ( unsigned int j=0;j<filterCoeff.size();j++ )
     {
       newval += buffer.get(j)*filterCoeff[j];
     }
-    array[i] = newval;
+    getter( array, i ) = newval;
   }
 }
 

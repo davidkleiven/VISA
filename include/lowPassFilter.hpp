@@ -3,7 +3,9 @@
 #include <vector>
 #include <cassert>
 #include "fifoBuffer.hpp"
+#include "armaGetter.hpp"
 #include <iostream>
+#include <armadillo>
 
 namespace visa
 {
@@ -23,8 +25,8 @@ public:
   void computeFilterCoefficients( const kernelType &kernel );
 
   /** Runs the sinc filter through the array. arrayType must implement operator[] */
-  template <class arrayType, class elemType>
-  void filterArray( arrayType &array ) const;
+  template <class elemType, ArmaMatrix_t dir>
+  void filterArray( arma::Mat<elemType> &array, visa::ArmaGetter<elemType,dir> &getter ) const;
 private:
   unsigned int sourceSize{0};
   unsigned int targetSize{0};

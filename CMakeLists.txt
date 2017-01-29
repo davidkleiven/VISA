@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.6)
 project(VISA)
 
 set( CMAKE_CXX_STANDARD 11 )
+add_definitions( -DARMA_NO_DEBUG ) # Disable Armadillo debug checks
+
 # Install paths
 set( INSTALL_LIB_DIR "/usr/local/lib" )
 set( INSTALL_INCLUDE_DIR "/usr/local/include" )
@@ -32,10 +34,13 @@ add_executable( exSmallMatrix.out Examples/exSmallMatrix.cpp)
 target_link_libraries( exSmallMatrix.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} ${CMAKE_CURRENT_SOURCE_DIR}/src/libvisa.so)
 target_link_libraries( exSmallMatrix.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} visa)
 
+add_executable( waveOnMembrane.out Examples/waveOnMembrane.cpp)
+target_link_libraries( waveOnMembrane.out ${SFML_LIBRARIES} libvisa.so)
+
 # Install target
 
 set( HEADERFILES include/colormaps.hpp include/fifoBuffer.hpp include/gaussianKernel.hpp include/lowPassFilter.hpp include/lowPassFilter.tpp
-                 include/visa.hpp include/visualizer.hpp include/visualizer1D.hpp include/windowHandler.hpp)
+include/visa.hpp include/visualizer.hpp include/visualizer1D.hpp include/windowHandler.hpp include/armaGetter.hpp)
 
 install( FILES ${HEADERFILES} DESTINATION ${INSTALL_INCLUDE_DIR}/visa )
 

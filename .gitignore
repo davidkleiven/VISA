@@ -19,3 +19,4 @@ CTest*
 Testing/*
 unittest/CMakeFiles/*
 cmap.csv
+*.out
