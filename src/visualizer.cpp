@@ -1,6 +1,7 @@
 #include "visualizer.hpp"
 #include <iostream>
 #include <stdexcept>
+#include <omp.h>
 //#include <SFML/Color.hpp>
 //#define VIS_DEBUG
 
@@ -184,12 +185,22 @@ void visa::Visualizer::filterHorizontal( arma::mat &mat )
   filter.setTargetSize( width );
   filter.computeFilterCoefficients( filterKernel );
 
-  visa::ArmaGetter<double,visa::ArmaMatrix_t::ROW> getter;
-  for ( unsigned int i=0;i<mat.n_rows;i++ )
+  unsigned int maxThreads = omp_get_num_threads();
+  vector< visa::ArmaGetter<double,visa::ArmaMatrix_t::ROW> > getters;
+  for ( unsigned int i=0;i<maxThreads;i++ )
   {
-    getter.fixedIndx = i;
-    //arma::subview_row<double> row = mat.row(i);
-    filter.filterArray( mat, getter );
+    getters.push_back( visa::ArmaGetter<double,visa::ArmaMatrix_t::ROW>() );
+  }
+
+  #pragma omp parallel
+  {
+    unsigned int id = omp_get_thread_num();
+    #pragma omp for
+    for ( unsigned int i=0;i<mat.n_rows;i++ )
+    {
+      getters[id].fixedIndx = i;
+      filter.filterArray( mat, getters[id] );
+    }
   }
 }
 
@@ -198,12 +209,25 @@ void visa::Visualizer::filterVertical( arma::mat &mat )
   filter.setSourceSize( mat.n_rows );
   filter.setTargetSize( height );
   filter.computeFilterCoefficients( filterKernel );
+  unsigned int maxThreads = omp_get_num_threads();
 
-  visa::ArmaGetter<double, visa::ArmaMatrix_t::COL> getter;
-  for ( unsigned int i=0;i<mat.n_cols;i++ )
+  // Initialize one getter for each thread
+  vector< visa::ArmaGetter<double, visa::ArmaMatrix_t::COL > > getters;
+  for ( unsigned int i=0;i<maxThreads;i++ )
   {
-    getter.fixedIndx = i;
-    filter.filterArray( mat, getter );
+    getters.push_back( visa::ArmaGetter<double, visa::ArmaMatrix_t::COL>() );
+  }
+
+  // Run the filtering in parallel
+  #pragma omp parallel
+  {
+    unsigned int id = omp_get_thread_num();
+    #pragma omp for
+    for ( unsigned int i=0;i<mat.n_cols;i++ )
+    {
+      getters[id].fixedIndx = i;
+      filter.filterArray( mat, getters[id] );
+    }
   }
 }
 
