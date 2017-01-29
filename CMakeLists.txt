@@ -4,6 +4,7 @@ project(VISA)
 
 set( CMAKE_CXX_STANDARD 11 )
 add_definitions( -DARMA_NO_DEBUG ) # Disable Armadillo debug checks
+set( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-fopenmp")
 
 # Install paths
 set( INSTALL_LIB_DIR "/usr/local/lib" )
