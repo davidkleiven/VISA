@@ -50,6 +50,17 @@ visa::Visualizer& visa::WindowHandler::get( const char* name )
   throw ( runtime_error(msg) );
 }
 
+visa::Visualizer& visa::WindowHandler::get( unsigned int indx )
+{
+  if ( indx > plots.size() )
+  {
+    stringstream ss;
+    ss << "VISA window handler: Plot with ID " << indx << " requested. But there are only " << plots.size() << " plots present!";
+    throw ( runtime_error(ss.str()) );
+  }
+  return *plots[indx];
+}
+
 visa::Visualizer& visa::WindowHandler::getActive()
 {
   if ( active == NULL )

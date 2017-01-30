@@ -21,8 +21,14 @@ public:
   /** Get the visualization object */
   Visualizer& get( const char* name );
 
+  /** Get plot by index */
+  Visualizer& get( unsigned int indx );
+
   /** Get active visualization object */
   Visualizer& getActive();
+
+  /** Number of plots */
+  unsigned int nPlots() const { return plots.size(); };
 
   /** Set active visualization window */
   void setActive( const char* name );
