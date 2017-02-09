@@ -95,7 +95,7 @@ protected:
   bool resizingEnabled{true};
   bool colorLimitsSetByUser{false};
   sf::Uint8 *pixels{NULL};
-  sf::Uint8 alpha{0};
+  sf::Uint8 alpha{255};
 
   /** Set color corresponding to value */
   void setColor( double value, sf::Color &color ) const;
