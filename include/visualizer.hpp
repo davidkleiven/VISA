@@ -59,6 +59,9 @@ public:
   /** Set color map */
   void setCmap( Colormaps::Colormap_t cm ){ cmaps.setMap(cm); };
 
+  /** Sets the opacity */
+  void setOpacity( double alpha );
+
   /** Down sample by simple averaging */
   static double average( const arma::mat &mat );
 
@@ -92,6 +95,7 @@ protected:
   bool resizingEnabled{true};
   bool colorLimitsSetByUser{false};
   sf::Uint8 *pixels{NULL};
+  sf::Uint8 alpha{0};
 
   /** Set color corresponding to value */
   void setColor( double value, sf::Color &color ) const;

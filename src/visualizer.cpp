@@ -133,7 +133,7 @@ void visa::Visualizer::fillVertexArray( arma::mat &values )
       pixels[4*(width*row+col)] = color.r;
       pixels[4*(width*row+col)+1] = color.g;
       pixels[4*(width*row+col)+2] = color.b;
-      pixels[4*(width*row+col)+3] = 255;
+      pixels[4*(width*row+col)+3] = alpha;
     }
   }
 
@@ -269,4 +269,17 @@ void visa::Visualizer::setColorLim( double min, double max )
   colorLimitsSetByUser = true;
   colorMin = min;
   colorMax = max;
+}
+
+void visa::Visualizer::setOpacity( double newAlpha )
+{
+  if ( newAlpha < 0.0 )
+  {
+    newAlpha = 0.0;
+  }
+  else if ( newAlpha > 1.0 )
+  {
+    newAlpha = 1.0;
+  }
+  alpha = 255.0*newAlpha;
 }
