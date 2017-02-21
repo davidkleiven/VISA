@@ -23,29 +23,14 @@ public:
   /** Initialize the window handler */
   void init();
 
-  /** Set values to visualize */
+  /** Set values to visualize. Depricated use setImg instead */
   void fillVertexArray( arma::mat &values );
+
+  /** Creates an image from the matrix */
+  void setImg( arma::mat &values );
 
   /** Set values to visualize */
   virtual void fillVertexArray( arma::vec &values ){};
-
-  /** Checks if the window is still open */
-  bool isOpen() const;
-
-  /** Checks for events */
-  bool pollEvent( sf::Event &event ) const;
-
-  /** Close the window */
-  void close(){ window->close(); };
-
-  /** Dump image to screen */
-  void display(){ window->display(); };
-
-  /** Draw the vertex array */
-  void draw();
-
-  /** Fill the window with a black background color */
-  void clear(){ window->clear(sf::Color::Black); };
 
   /** Set upper limit of the colorscale */
   void setColorMax( double max ){ colorMax = max; };
@@ -62,11 +47,8 @@ public:
   /** Sets the opacity */
   void setOpacity( double alpha );
 
-  /** Down sample by simple averaging */
-  static double average( const arma::mat &mat );
-
-  /** Save current scene */
-  sf::Image capture(){ return window->capture(); };
+  /** Get current image */
+  const sf::Image& getImg() const { return *img; };
 
   /** Return the name of the plot */
   const std::string& getName() const { return name; };
@@ -74,14 +56,9 @@ public:
   /** Set upper and lower y-limit. Only relevant for 1D plots */
   virtual void setLimits( double min, double max ){};
 protected:
-  sf::RenderWindow *window{NULL};
-  sf::View *view{NULL};
   sf::VertexArray *vArray{NULL};
-  sf::Texture *tx{NULL};
-  visa::LowPassFilter filter;
-  visa::GaussianKernel filterKernel;
   std::string name;
-  sf::Image img;
+  sf::Image *img{NULL};
 
   unsigned int width{640};
   unsigned int height{480};
@@ -96,6 +73,7 @@ protected:
   bool colorLimitsSetByUser{false};
   sf::Uint8 *pixels{NULL};
   sf::Uint8 alpha{255};
+  unsigned int nPix{0};
 
   /** Set color corresponding to value */
   void setColor( double value, sf::Color &color ) const;

@@ -52,7 +52,7 @@ void visa::Visualizer1D::fillVertexArray( arma::vec &vec )
   }
 
   // Draw onto screen
-  window->draw( *vArray );
+  //window->draw( *vArray );
 }
 
 void visa::Visualizer1D::init( const char* windowname )

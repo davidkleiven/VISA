@@ -49,9 +49,9 @@ int main( int argc, char** argv )
     {
       //timesignal = solution*sin( freq*t );
       parallelDoubleMultiply( solution, timesignal, sin(freq*t) );
-      plots.get("Eigenmode").fillVertexArray( timesignal );
+      plots.get("Eigenmode").setImg( timesignal );
       plots.show();
-      plots.get("Eigenmode").clear();
+      plots.clear();
     }
   }
   catch ( exception &exc )

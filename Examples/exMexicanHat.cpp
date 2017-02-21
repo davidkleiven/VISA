@@ -19,7 +19,7 @@ int main( int argc, char** argv )
     plots.getActive().setCmap( cmap );
     arma::mat matrix(700,700);
     mexicanHat( 0.1, matrix );
-    plots.getActive().fillVertexArray( matrix );
+    plots.getActive().setImg( matrix );
     plots.show();
     char quit;
     cout << "Press any character to quit...\n";

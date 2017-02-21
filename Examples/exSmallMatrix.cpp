@@ -16,6 +16,7 @@ int main( int argc, char** argv )
     plots.addPlot("200x700");
     plots.addPlot("700x700");
     plots.setActive("200x200");
+    plots.setLayout(2,2);
 
     arma::mat mat(200,200);
     arma::mat mat72(700,200);
@@ -26,10 +27,10 @@ int main( int argc, char** argv )
     mat72.randu();
     mat27.randu();
     mat77.randu();
-    plots.get("200x200").fillVertexArray(mat);
-    plots.get("200x700").fillVertexArray(mat27);
-    plots.get("700x200").fillVertexArray(mat72);
-    plots.get("700x700").fillVertexArray(mat77);
+    plots.get("200x200").setImg(mat);
+    plots.get("200x700").setImg(mat27);
+    plots.get("700x200").setImg(mat72);
+    plots.get("700x700").setImg(mat77);
     for ( unsigned int i=10;i>0;i--)
     {
       clog << "This will close in " << i << " seconds...\r";

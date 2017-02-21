@@ -5,12 +5,16 @@
 
 namespace visa
 {
+
 /** Class that handles the windows */
 class WindowHandler
 {
 public:
-  WindowHandler(){};
+  WindowHandler();
   ~WindowHandler();
+
+  /** Set the layout of for the plots */
+  void setLayout( unsigned int nHor, unsigned int nVer );
 
   /** Add a plot that will be displayed in a separate window */
   void addPlot( const char* name );
@@ -35,12 +39,31 @@ public:
 
   /** Show all plots */
   void show();
+
+  /** Stores current view */
+  void saveImg( const char* filename );
+
+  /** Clear content */
+  void clear();
 private:
+  sf::RenderWindow *window{NULL};
   std::vector<Visualizer*> plots;
   Visualizer* active{NULL};
 
+  unsigned int width{1024};
+  unsigned int height{768};
+
+  unsigned int nImgHor{1};
+  unsigned int nImgVer{1};
+
   /** If the active window is closed, this sets a new active window */
   void resetActive();
+
+  /** Computes the starting position */
+  void startPos( unsigned int plotNr, unsigned int &wStart, unsigned int &hStart ) const;
+
+  /** Rescales the texture */
+  void rescale( sf::Sprite &spr, const sf::Vector2u &origsize ) const;
 };
 };
 #endif
