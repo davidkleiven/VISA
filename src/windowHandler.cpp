@@ -137,8 +137,8 @@ void visa::WindowHandler::startPos( unsigned int plotNr, unsigned int &wStart, u
   double stepW = static_cast<double>(width)/static_cast<double>(nImgHor);
   double stepH = static_cast<double>(height)/static_cast<double>(nImgVer);
 
-  unsigned int row = plotNr%nImgVer;
-  unsigned int col = plotNr/nImgHor;
+  unsigned int row = plotNr/nImgHor;
+  unsigned int col = plotNr%nImgHor;
   wStart = col*stepW;
   hStart = row*stepH;
 }
