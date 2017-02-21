@@ -17,7 +17,7 @@ int main( int argc, char** argv )
     plots.addPlot( "Mexican Hat" );
     plots.setActive( "Mexican Hat" );
     plots.getActive().setCmap( cmap );
-    arma::mat matrix(700,700);
+    arma::mat matrix(2000,2000);
     mexicanHat( 0.1, matrix );
     plots.getActive().setImg( matrix );
     plots.show();
