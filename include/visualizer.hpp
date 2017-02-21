@@ -53,6 +53,9 @@ public:
   /** Return the name of the plot */
   const std::string& getName() const { return name; };
 
+  /** Returns the transparency factor */
+  sf::Uint8 getAlpha() const { return alpha; };
+
   /** Set upper and lower y-limit. Only relevant for 1D plots */
   virtual void setLimits( double min, double max ){};
 protected:
