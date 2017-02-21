@@ -11,6 +11,9 @@ visa::WindowHandler::WindowHandler()
   window->setKeyRepeatEnabled(false);
   window->clear( sf::Color::Black );
   window->setVerticalSyncEnabled(true);
+
+  rendText = new sf::RenderTexture;
+  rendText->create(width,height);
 }
 
 visa::WindowHandler::~WindowHandler()
@@ -20,6 +23,7 @@ visa::WindowHandler::~WindowHandler()
     delete plots[i];
   }
   delete window;
+  delete rendText;
 }
 
 void visa::WindowHandler::addPlot( const char* name )
@@ -84,7 +88,7 @@ void visa::WindowHandler::setActive( const char* name )
   active = &get(name);
 }
 
-void visa::WindowHandler::show()
+void visa::WindowHandler::draw()
 {
   if ( active == NULL ) return;
 
@@ -97,8 +101,20 @@ void visa::WindowHandler::show()
     unsigned int x0, y0;
     startPos( i, x0, y0 );
     spr.setPosition( sf::Vector2f(x0,y0) );
-    window->draw(spr);
+    rendText->draw(spr);
   }
+}
+
+void visa::WindowHandler::show()
+{
+  // Included for backward compatibility
+  if ( !separateDrawing )
+  {
+    draw();
+  }
+  rendText->display();
+  sf::Sprite spr(rendText->getTexture());
+  window->draw(spr);
   window->display();
 }
 

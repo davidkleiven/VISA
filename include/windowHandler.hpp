@@ -45,10 +45,19 @@ public:
 
   /** Clear content */
   void clear();
+
+  /** Off-screen rendering of plots */
+  void draw();
+
+  /** Several images can be rendered offscreen via the draw function and displayed when show is called */
+  void useSeparateDrawing(){ separateDrawing = true; };
 private:
   sf::RenderWindow *window{NULL};
+  sf::RenderTexture *rendText{NULL};
   std::vector<Visualizer*> plots;
   Visualizer* active{NULL};
+
+  bool separateDrawing{false};
 
   unsigned int width{1024};
   unsigned int height{768};

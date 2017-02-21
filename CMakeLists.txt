@@ -40,6 +40,10 @@ add_executable( exSmallMatrix.out Examples/exSmallMatrix.cpp)
 target_link_libraries( exSmallMatrix.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} ${CMAKE_CURRENT_SOURCE_DIR}/src/libvisa.so)
 target_link_libraries( exSmallMatrix.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} visa)
 
+add_executable( overlay.out Examples/overlay.cpp)
+target_link_libraries( overlay.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} ${CMAKE_CURRENT_SOURCE_DIR}/src/libvisa.so)
+target_link_libraries( overlay.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} visa)
+
 add_executable( waveOnMembrane.out Examples/waveOnMembrane.cpp)
 target_link_libraries( waveOnMembrane.out ${SFML_LIBRARIES} ${CMAKE_CURRENT_SOURCE_DIR}/src/libvisa.so)
 
