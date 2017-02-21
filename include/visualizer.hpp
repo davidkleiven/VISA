@@ -58,6 +58,9 @@ public:
 
   /** Set upper and lower y-limit. Only relevant for 1D plots */
   virtual void setLimits( double min, double max ){};
+
+  /** True of the image can be plotted */
+  bool isReady() const;
 protected:
   sf::VertexArray *vArray{NULL};
   std::string name;

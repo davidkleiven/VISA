@@ -22,6 +22,7 @@ visa::WindowHandler::~WindowHandler()
   {
     delete plots[i];
   }
+  window->close();
   delete window;
   delete rendText;
 }
@@ -95,18 +96,25 @@ void visa::WindowHandler::draw()
   sf::Texture tx;
   for ( unsigned int i=0;i<plots.size();i++ )
   {
-    tx.loadFromImage( plots[i]->getImg() );
-    sf::Sprite spr(tx);
-    rescale( spr, tx.getSize() );
-    unsigned int x0, y0;
-    startPos( i, x0, y0 );
-    spr.setPosition( sf::Vector2f(x0,y0) );
-    rendText->draw(spr);
+    if ( plots[i]->isReady() )
+    {
+      tx.loadFromImage( plots[i]->getImg() );
+      sf::Sprite spr(tx);
+      rescale( spr, tx.getSize() );
+      unsigned int x0, y0;
+      startPos( i, x0, y0 );
+      spr.setPosition( sf::Vector2f(x0,y0) );
+      rendText->draw(spr);
+    }
   }
 }
 
 void visa::WindowHandler::show()
 {
+  if ( !window->isOpen() )
+  {
+    return;
+  }
   // Included for backward compatibility
   if ( !separateDrawing )
   {

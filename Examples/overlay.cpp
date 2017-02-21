@@ -50,7 +50,7 @@ int main( int argc, char** argv )
     pltFB.setImg( front );
     plots.draw();
     pltFB.setCmap( visa::Colormaps::Colormap_t::GREYSCALE );
-    pltFB.setOpacity(0.65);
+    pltFB.setOpacity(0.5);
     pltFB.setImg( bkg );
     plots.draw();
 

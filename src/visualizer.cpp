@@ -97,3 +97,8 @@ void visa::Visualizer::setOpacity( double newAlpha )
   }
   alpha = 255.0*newAlpha;
 }
+
+bool visa::Visualizer::isReady() const
+{
+  return (img->getSize().x) > 0 && (img->getSize().y > 0 );
+}
