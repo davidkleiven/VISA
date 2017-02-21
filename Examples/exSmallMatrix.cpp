@@ -15,6 +15,8 @@ int main( int argc, char** argv )
     plots.addPlot("700x200");
     plots.addPlot("200x700");
     plots.addPlot("700x700");
+    plots.get("700x200").setCmap( visa::Colormaps::Colormap_t::GREYSCALE );
+    plots.get("200x700").setCmap( visa::Colormaps::Colormap_t::NIPY_SPECTRAL );
     plots.setActive("200x200");
     plots.setLayout(2,2);
 
