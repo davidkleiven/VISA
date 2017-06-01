@@ -1,7 +1,7 @@
 from matplotlib import cm as cm
 import numpy as np
 
-name = "nipy_spectral"
+name = "inferno"
 fname = "cmap.csv"
 cmap = cm.get_cmap( name, 255 )
 rgb = np.zeros((cmap.N,3))
