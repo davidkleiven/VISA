@@ -6,4 +6,5 @@ install:
   - wget https://www.sfml-dev.org/files/SFML-2.5.0-linux-gcc-64-bit.tar.gz
   - mkdir sfml_tmp
   - tar -xzvf SFML-2.5.0-linux-gcc-64-bit.tar.gz -C sfml_tmp
+  - bsah configure.sh
   - cmake . -DSFML_DIR=./sfml_tmp/SFML-2.5.0/lib/cmake/SFML
