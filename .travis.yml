@@ -7,4 +7,5 @@ install:
   - tar -xzvf SFML-2.5.0-linux-gcc-64-bit.tar.gz -C sfml_tmp
   - bash configure.sh
   - cmake . -DSFML_DIR=${TRAVIS_BUILD_DIR}/sfml_tmp/SFML-2.5.0/lib/cmake/SFML
+  - export CPATH=${CPATH}:${TRAVIS_BUILD_DIR}/sfml_tmp/SFML-2.5.0/include
   - make
