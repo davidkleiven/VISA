@@ -8,4 +8,5 @@ install:
   - bash configure.sh
   - cmake . -DSFML_DIR=${TRAVIS_BUILD_DIR}/sfml_tmp/SFML-2.5.0/lib/cmake/SFML
   - export CPATH=${CPATH}:${TRAVIS_BUILD_DIR}/sfml_tmp/SFML-2.5.0/include
+  - export LIBRARY_PATH=${LIBRARY_PATH}:${TRAVIS_BUILD_DIR}/sfml_tmp/SFML-2.5.0/lib
   - make
