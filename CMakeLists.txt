@@ -27,7 +27,7 @@ include_directories(SFML_INCLUDE_DIR)
 find_package(Armadillo REQUIRED )
 include_directories(ARMADILLO_INCLUDE_DIR)
 
-add_subdirectory(unittest)
+#add_subdirectory(unittest)
 # Add the examples
 add_executable( exLinePlot.out Examples/exLinePlot.cpp )
 target_link_libraries( exLinePlot.out ${SFML_LIBRARIES} libvisa.so)
