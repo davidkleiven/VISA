@@ -1,3 +1,7 @@
+env:
+  global:
+    - CPATH=$CPATH:./sfml_tmp/SFML-2.5.0/include
+
 install:
   - sudo apt-get install libarmadillo-dev
   - sudo apt-get install libgtest-dev
