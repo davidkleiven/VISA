@@ -1,5 +1,6 @@
 # VISA
 ![Build status](https://travis-ci.org/davidkleiven/VISA.svg?branch=master)
+
 VISA (VISualize Array) is a tool for visualizing armadillo arrays using the
 SFML library.
 
