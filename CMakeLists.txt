@@ -2,6 +2,8 @@
 cmake_minimum_required(VERSION 3.6)
 project(VISA)
 
+list(APPEND CMAKE_MODULE_PATH "/usr/share/SFML/cmake/Modules")
+
 set( CMAKE_CXX_STANDARD 11 )
 add_definitions( -DARMA_NO_DEBUG ) # Disable Armadillo debug checks
 
