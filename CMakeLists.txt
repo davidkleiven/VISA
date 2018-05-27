@@ -23,7 +23,7 @@ add_subdirectory(src)
 
 find_package(SFML REQUIRED system window graphics network audio)
 include_directories(SFML_INCLUDE_DIR)
-
+message( ${SFML_INCLUDE_DIR} )
 find_package(Armadillo REQUIRED )
 include_directories(ARMADILLO_INCLUDE_DIR)
 

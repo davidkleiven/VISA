@@ -1,6 +1,6 @@
 #ifndef COLOR_MAPS_H
 #define COLOR_MAPS_H
-#include <SFML/Graphics.hpp>
+#include "SFML/Graphics.hpp"
 
 namespace visa
 {
