@@ -35,7 +35,7 @@ target_link_libraries( exLinePlot.out ${SFML_LIBRARIES} libvisa.so)
 add_executable( exMexicanHat.out EXCLUDE_FROM_ALL Examples/exMexicanHat.cpp)
 target_link_libraries( exMexicanHat.out ${SFML_LIBRARIES} libvisa.so)
 
-add_executable( exSincFilter.out Examples/exSincFilter.cpp)
+add_executable( exSincFilter.out EXCLUDE_FROM_ALL Examples/exSincFilter.cpp)
 target_link_libraries( exSincFilter.out ${SFML_LIBRARIES} libvisa.so)
 
 add_executable( exSmallMatrix.out EXCLUDE_FROM_ALL Examples/exSmallMatrix.cpp)
