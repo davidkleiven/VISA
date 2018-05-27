@@ -29,24 +29,24 @@ include_directories(ARMADILLO_INCLUDE_DIR)
 
 #add_subdirectory(unittest)
 # Add the examples
-add_executable( exLinePlot.out Examples/exLinePlot.cpp )
+add_executable( exLinePlot.out EXCLUDE_FROM_ALL Examples/exLinePlot.cpp )
 target_link_libraries( exLinePlot.out ${SFML_LIBRARIES} libvisa.so)
 
-add_executable( exMexicanHat.out Examples/exMexicanHat.cpp)
+add_executable( exMexicanHat.out EXCLUDE_FROM_ALL Examples/exMexicanHat.cpp)
 target_link_libraries( exMexicanHat.out ${SFML_LIBRARIES} libvisa.so)
 
 add_executable( exSincFilter.out Examples/exSincFilter.cpp)
 target_link_libraries( exSincFilter.out ${SFML_LIBRARIES} libvisa.so)
 
-add_executable( exSmallMatrix.out Examples/exSmallMatrix.cpp)
+add_executable( exSmallMatrix.out EXCLUDE_FROM_ALL Examples/exSmallMatrix.cpp)
 target_link_libraries( exSmallMatrix.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} ${CMAKE_CURRENT_SOURCE_DIR}/src/libvisa.so)
 target_link_libraries( exSmallMatrix.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} visa)
 
-add_executable( overlay.out Examples/overlay.cpp)
+add_executable( overlay.out EXCLUDE_FROM_ALL Examples/overlay.cpp)
 target_link_libraries( overlay.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} ${CMAKE_CURRENT_SOURCE_DIR}/src/libvisa.so)
 target_link_libraries( overlay.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} visa)
 
-add_executable( waveOnMembrane.out Examples/waveOnMembrane.cpp)
+add_executable( waveOnMembrane.out EXCLUDE_FROM_ALL Examples/waveOnMembrane.cpp)
 target_link_libraries( waveOnMembrane.out ${SFML_LIBRARIES} ${CMAKE_CURRENT_SOURCE_DIR}/src/libvisa.so)
 
 # Install target
