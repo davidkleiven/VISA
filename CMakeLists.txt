@@ -5,7 +5,6 @@ project(VISA)
 list(APPEND CMAKE_MODULE_PATH "/usr/share/SFML/cmake/Modules")
 list(APPEND CMAKE_MODULE_PATH ${SFML_DIR})
 
-
 set( CMAKE_CXX_STANDARD 11 )
 add_definitions( -DARMA_NO_DEBUG ) # Disable Armadillo debug checks
 
@@ -51,15 +50,14 @@ add_executable( overlay.out EXCLUDE_FROM_ALL Examples/overlay.cpp)
 target_link_libraries( overlay.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} ${CMAKE_CURRENT_SOURCE_DIR}/src/libvisa.so)
 target_link_libraries( overlay.out ${SFML_LIBRARIES} ${ARMADILLO_LIBRARY} visa)
 
-add_executable( waveOnMembrane.out EXCLUDE_FROM_ALL Examples/waveOnMembrane.cpp)
-target_link_libraries( waveOnMembrane.out libvisa.so ${SFML_LIBRARIES})
+add_executable(waveOnMembrane.out Examples/waveOnMembrane.cpp)
+add_dependencies(waveOnMembrane.out visa)
+target_link_libraries( waveOnMembrane.out ${CMAKE_CURRENT_SOURCE_DIR}/src/libvisa.so ${SFML_LIBRARIES})
 
 # Install target
-
 set( HEADERFILES include/colormaps.hpp include/fifoBuffer.hpp include/gaussianKernel.hpp include/lowPassFilter.hpp include/lowPassFilter.tpp
 include/visa.hpp include/visualizer.hpp include/visualizer1D.hpp include/windowHandler.hpp include/armaGetter.hpp)
 
 install( FILES ${HEADERFILES} DESTINATION ${INSTALL_INCLUDE_DIR}/visa )
-
 enable_testing()
 add_test(NAME visaTest COMMAND ./unittest/alltest.out )
