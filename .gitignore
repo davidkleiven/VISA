@@ -20,3 +20,8 @@ Testing/*
 unittest/CMakeFiles/*
 cmap.csv
 *.out
+backup-090420181603-pre-visa.tgz
+backup-090420181603-pre-visa.tgz
+doc-pak/*
+description-pak
+visa_20180904-1_amd64.deb
